@@ -1,0 +1,43 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    position: absolute;
+    top: 20%;
+}
+
+.busunesscard__container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid black;
+    width: 600px;
+    height: 400px;
+    border-radius: 30px;
+}
+
+.img__container {
+    border: 1px solid black;
+    width: 150px;
+    height: 150px;
+}
+
+.form__container {
+    margin-top: 10px;
+    width: 300px;
+}
+
+.form__container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__container form input {
+    height: 20px;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,193 @@
+@import './reset.css';
+
+body {
+    background-color: white;
+}
+
+.logo {
+    position: absolute;
+    top: -20px;
+    left: 10px;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.neckless__container {
+    display: flex;
+}
+
+.neckless_front {
+    margin-right: 20px;
+    width: 30px;
+    height: 180px;
+    background-color: #333;
+    border-bottom-left-radius: 14px;
+    transform: rotate(-25deg);
+    z-index: 1;
+}
+
+.neckless_front__rotate {
+    margin-right: 20px;
+    width: 30px;
+    height: 180px;
+    background-color: #333;
+    border-bottom-left-radius: 14px;
+    transform: rotate(-25deg);
+    z-index: 1;
+}
+
+.neckless_back {
+    width: 30px;
+    height: 170px;
+    margin-left: 35px;
+    background-color: #333;
+    transform: rotate(30deg);
+    z-index: -99;
+}
+
+.App {
+    border-radius: 20px;
+    width: 356px;
+    height: 575px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotateY(0deg);
+    transition: transform 1.5s ease-in-out;
+    background-color: #333;
+    margin-top: -35px;
+}
+
+.App__rotate {
+    border-radius: 20px;
+    width: 356px;
+    height: 575px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotateY(180deg);
+    transition: transform 1.5s ease-in-out;
+    background-color: #333;
+    margin-top: -35px;
+}
+
+.top {
+    width: inherit;
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    height: 80px;
+    background-color: #ffce85;
+}
+
+.hole {
+    position: absolute;
+    background-color: white;
+    width: 70px;
+    height: 1.5vh;
+    border: 0.5px solid black;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.img__container {
+    margin-top: 40px;
+    width: 170px;
+    height: 170px;
+    transform: scale(1);
+    border-radius: 50%;
+    transition: transform 0.1s linear 0.7s;
+    background-color: white;
+}
+
+.hidden {
+    transform: scale(0);
+}
+
+.App_shadow {
+    position: absolute;
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 30vw;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: whitesmoke;
+    z-index: -1;
+}
+
+.test {
+    position: absolute;
+    top: 30%;
+    left: 20%;
+}
+
+#login__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+}
+
+#login__form input {
+    margin-top: 10px;
+    width: 250px;
+    border-radius: 15px;
+    height: 50px;
+    background-color: whitesmoke;
+    outline: none;
+}
+
+#login__form input:last-child {
+    width: 257px;
+}
+
+.regist__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 50px;
+    background-color: white;
+    border-radius: 13px;
+    border: 1px solid white;
+    margin-top: 40px;
+}
+
+.link__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 50px;
+    background-color: white;
+    border-radius: 13px;
+    border: 1px solid white;
+    margin-top: 5px;
+}
+
+.link__container a {
+    color: #333;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.regist__container a {
+    color: #333;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.span {
+    text-decoration: none;
+    margin-bottom: 20px;
+}
