@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os, datetime
+from os import path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,14 +29,30 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# REST_FRAMEWORK = {
-#     # Use Django's standard `django.contrib.auth` permissions,
-#     # or allow read-only access for unauthenticated users.
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#     ]
-# }
-
+#DRF
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+     'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
+        # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
+        'rest_framework.permissions.AllowAny', # 누구나 접근 가능
+     ],
+	
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        # 'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256', # 암호화 알고리즘
+    'JWT_ALLOW_REFRESH': True, # refresh 사용 여부
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(minutes=60), # 유효기간 설정
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7), # JWT 토큰 갱신 유효기간
+    # import datetime 상단에 import 하기
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -138,6 +156,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -147,3 +167,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+APPEND_SLASH=False
+
+# AUTHENTICATION_BACKENDS = ['users.auth_backends.EmailBackend']
