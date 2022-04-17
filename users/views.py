@@ -9,11 +9,13 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.decorators import permission_classes, authentication_classes
 
+from rest_framework_jwt.settings import api_settings
+
 from rest_framework import status
 
 from users.models import User
 
-from users.serializers import UserLoginSerializer, UserRegisterSerializer
+from users.serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer
 import jwt, datetime
 
 
@@ -55,14 +57,14 @@ class LoginView(GenericAPIView):
         if user['email'] == "None":
             return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message':"fail(email)"})
         
-        return Response(
-            {
-                 "email": UserLoginSerializer(
-                     user,context=self.get_serializer_context()
-                 ).data.get('email'), 
-                 "token": user['token']
-             }
-        ) 
+        response = Response()
+        #프론트엔드에 보여지는 것을 막고, 백엔드에서만 사용하기 위해 토큰을 쿠키에 저장
+        response.set_cookie(key='jwt', value=user['token'], httponly=True)
+        response.data = {
+            "email" : UserLoginSerializer(user,context=self.get_serializer_context()).data.get('email'),
+            'message' : "token successfully created"
+        }
+        return response
         # email = request.data['email']
         # password = request.data['password']
         # user = User.objects.filter(email=email).first()
@@ -88,21 +90,21 @@ class LoginView(GenericAPIView):
         #     'jwt' : token
         # }
         # return response
-
+JWT_DECODE_HANDLER = api_settings.JWT_DECODE_HANDLER
 class UserView(APIView):
     def get(self, request):
         loggedin = False
         token = request.COOKIES.get('jwt')
-        
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
         try:
-            payload = jwt.decode(token, 'secret', algorithms='HS256')
+            # payload = jwt.decode(token, 'secret', algorithms='HS256')
+            payload = JWT_DECODE_HANDLER(token)
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
 
         user = User.objects.filter(email = payload['email']).first()
-        serializer = UserRegisterSerializer(user)
+        serializer = UserSerializer(user)
         if request.user.is_authenticated:
             loggedin = True
         context ={

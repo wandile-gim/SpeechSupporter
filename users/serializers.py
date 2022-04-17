@@ -1,3 +1,4 @@
+from dataclasses import fields
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
@@ -63,3 +64,8 @@ class UserLoginSerializer(serializers.Serializer):
     #         instance.set_password(password)
     #     instance.save()
     #     return instance
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'nick_name', 'wannabe', 'profile_img']
