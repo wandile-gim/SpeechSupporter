@@ -30,7 +30,7 @@ body {
 }
 
 .neckless_front {
-    margin-top: -100px;
+    margin-top: -20vh;
     margin-right: 20px;
     width: 30px;
     height: 170px;
@@ -41,7 +41,7 @@ body {
 }
 
 .neckless_back {
-    margin-top: -100px;
+    margin-top: -20vh;
     width: 30px;
     height: 170px;
     margin-left: 35px;
@@ -54,8 +54,8 @@ body {
 .App {
     border-radius: 20px;
     border: 0.2px solid rgba(0, 0, 0, 0.2);
-    width: 30vw;
-    height: 80vh;
+    width: 400px;
+    height: 580px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,8 +69,8 @@ body {
 .App__rotate {
     border-radius: 20px;
     border: 0.2px solid rgba(0, 0, 0, 0.2);
-    width: 30vw;
-    height: 80vh;
+    width: 400px;
+    height: 580px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,19 +114,6 @@ body {
     background-color: white;
 }
 
-.App_shadow {
-    position: absolute;
-    border: 2px solid black;
-    border-radius: 15px;
-    width: 30vw;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: whitesmoke;
-    z-index: -1;
-}
-
 .test {
     position: absolute;
     top: 30%;
@@ -144,7 +131,7 @@ body {
 
 #login__form input {
     margin-top: 10px;
-    width: 22vw;
+    width: 300px;
     border: none;
     box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
@@ -214,7 +201,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 22vw;
+    width: 300px;
     height: 50px;
     box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     background-color: rgba(0, 0, 0, 0.04);
@@ -228,7 +215,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 22vw;
+    width: 300px;
     height: 50px;
     box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     background-color: rgba(0, 0, 0, 0.04);
