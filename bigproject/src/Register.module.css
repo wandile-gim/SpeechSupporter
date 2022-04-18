@@ -44,7 +44,7 @@ body {
 }
 
 .neckless_front {
-    margin-top: -120px;
+    margin-top: -20vh;
     margin-right: 20px;
     width: 30px;
     height: 170px;
@@ -55,7 +55,7 @@ body {
 }
 
 .neckless_back {
-    margin-top: -120px;
+    margin-top: -20vh;
     width: 30px;
     height: 170px;
     margin-left: 35px;
@@ -68,8 +68,8 @@ body {
 .App__rotate {
     border-radius: 20px;
     border: 0.2px solid rgba(0, 0, 0, 0.2);
-    width: 30vw;
-    height: 80vh;
+    width: 400px;
+    height: 580px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -135,9 +135,8 @@ body {
     flex-direction: column;
     align-items: center;
     width: 400px;
-    height: 80vh;
+    height: 580px;
     background-color: rgba(255, 255, 255, 0.5);
-    margin-top: 25px;
 }
 
 .input__container h1 {
