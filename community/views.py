@@ -41,8 +41,6 @@ def post(request): # 글 조회 -> 글 ID가 넘어온다는 가정 하에
         data = JSONParser().parse(request)
         
         obj = Post.objects.get(id = data['id'])
-        print(obj[0])
         serialzer = PostingSerializer(obj)
-        print(serialzer)
         return JsonResponse(serialzer.data, safe = False)
 
