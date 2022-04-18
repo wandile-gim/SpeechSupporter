@@ -1,19 +1,19 @@
 @import './reset.css';
 
 body {
-    background-color: white;
+    background-image: linear-gradient(to right, #7a88ff, #7affaf);
 }
 
-.logo {
-    position: absolute;
-    top: -20px;
-    left: 10px;
+.logo_container {
+    width: 140px;
+    height: 63px;
 }
 
 .container {
     width: 100vw;
     height: 100vh;
     display: flex;
+    background-color: rgba(255, 255, 255, 0.2);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -28,7 +28,7 @@ body {
     margin-right: 20px;
     width: 30px;
     height: 170px;
-    background-color: #333;
+    background-color: #0a2b3a;
     border-bottom-left-radius: 14px;
     transform: rotate(-25deg);
     z-index: 1;
@@ -39,7 +39,7 @@ body {
     width: 30px;
     height: 170px;
     margin-left: 35px;
-    background-color: #333;
+    background-color: #0a2b3a;
     transform: rotate(30deg);
     border-bottom-right-radius: 100px;
     z-index: -99;
@@ -47,6 +47,7 @@ body {
 
 .App {
     border-radius: 20px;
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
     width: 356px;
     height: 575px;
     display: flex;
@@ -54,12 +55,14 @@ body {
     align-items: center;
     transform: rotateY(360deg);
     transition: all 1.5s ease-in-out;
-    background-color: #333;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 12px 10px 0px 0px #333;
     margin-top: -35px;
 }
 
 .App__rotate {
     border-radius: 20px;
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
     width: 356px;
     height: 575px;
     display: flex;
@@ -67,7 +70,8 @@ body {
     align-items: center;
     transform: rotateY(0deg);
     transition: all 1.5s ease-in-out;
-    background-color: #333;
+    box-shadow: 12px 10px 0px 0px #333;
+    background-color: rgba(255, 255, 255, 0.5);
     margin-top: -35px;
 }
 
@@ -76,25 +80,22 @@ body {
     border-radius: inherit;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
     height: 80px;
-    background-color: #ffce85;
+    background-color: rgba(58, 134, 255, 0.6);
 }
 
 .hole {
     position: absolute;
-    background-color: white;
+    background-image: linear-gradient(to right, #7a88ff, #7affaf);
+    opacity: 0.6;
     width: 70px;
     height: 1.5vh;
-    border: 0.5px solid black;
+    border: 1px solid black;
+    box-shadow: 0px 0px 0px 0px #333;
     border-radius: 20px;
     margin-top: 20px;
-}
-
-.App h1 {
-    margin-right: 155px;
-    margin-top: 40px;
-    font-size: 24px;
-    color: white;
+    z-index: -99;
 }
 
 .img__container {
@@ -138,11 +139,14 @@ body {
 #login__form input {
     margin-top: 10px;
     width: 250px;
+    border: none;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     height: 50px;
-    background-color: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.04);
     box-sizing: border-box;
     outline: none;
+    color: white;
 }
 
 .id_input,
@@ -157,7 +161,7 @@ body {
     font-size: 13px;
     top: 204px;
     left: 80px;
-    color: #8c8c8c;
+    color: white;
     transition: all 0.2s linear;
 }
 
@@ -167,7 +171,7 @@ body {
     font-size: 13px;
     top: 264px;
     left: 80px;
-    color: #8c8c8c;
+    color: white;
     transition: all 0.2s linear;
 }
 
@@ -184,7 +188,7 @@ body {
     font-size: 10px;
     top: 198px;
     left: 76px;
-    color: #8c8c8c;
+    color: white;
 }
 
 .password_input:focus ~ .password_label {
@@ -200,7 +204,7 @@ body {
     font-size: 10px;
     top: 260px;
     left: 76px;
-    color: #8c8c8c;
+    color: white;
 }
 
 .regist__container {
@@ -209,10 +213,10 @@ body {
     align-items: center;
     width: 250px;
     height: 50px;
-    background-color: white;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.04);
     border-radius: 13px;
-    border: 1px solid white;
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 .link__container {
@@ -222,22 +226,22 @@ body {
     align-items: center;
     width: 250px;
     height: 50px;
-    background-color: white;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.04);
     border-radius: 13px;
-    border: 1px solid white;
-    margin-top: 5px;
+    margin-top: 15px;
     opacity: 100%;
     transition: all 0.1s linear 0.7s;
 }
 
 .link__container a {
-    color: #333;
+    color: white;
     text-decoration: none;
     margin-left: 10px;
 }
 
 .regist__container a {
-    color: #333;
+    color: white;
     text-decoration: none;
     margin-left: 10px;
 }

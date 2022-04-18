@@ -33,7 +33,6 @@ const MainPage = () => {
             </button>
             {loginState ? (
                 <>
-                    <img className='logo' src='aivle.png' />
                     <div className='container'>
                         <div className='neckless__container'>
                             <div className='neckless_front'></div>
@@ -42,6 +41,9 @@ const MainPage = () => {
                         <div className='App__rotate'>
                             <div className='top'></div>
                             <div className='hole'></div>
+                            <div className='logo_container'>
+                                <img className='logo' src='aivle.png' />
+                            </div>
                             <div className='img__container'>
                                 <form id='hidden'>
                                     <input type='text' placeholder='Please Fill Your Id' />
@@ -66,7 +68,6 @@ const MainPage = () => {
                 </>
             ) : (
                 <>
-                    <img className='logo' src='aivle.png' />
                     <div className='container'>
                         <div className='neckless__container'>
                             <div className='neckless_front'></div>
@@ -75,7 +76,9 @@ const MainPage = () => {
                         <div className='App'>
                             <div className='top'></div>
                             <div className='hole'></div>
-                            <h1>출근하기</h1>
+                            <div className='logo_container'>
+                                <img className='logo' src='aivle.png' />
+                            </div>
                             <form id='login__form'>
                                 <input id='id' type='text' className='id_input' onChange={idValueChk} require autoComplete='off' />
                                 <label htmlFor='id' className={idInputState ? 'id_label__focused' : 'id_label'}>
