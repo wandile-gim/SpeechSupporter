@@ -60,9 +60,13 @@ const Register = () => {
         </div>
         <div className={styles.form__container}>
           <form method="post">
+            <label htmlFor="id">아이디</label>
             <input type="text" id="id" required onChange={idValueChk} />
+            <label htmlFor="password">비밀번호</label>
             <input type="password" id="password" required />
+            <label htmlFor="email">e-mail</label>
             <input type="email" id="email" required onChange={emailValueChk} />
+            <label htmlFor="company">희망하는 기업</label>
             <input
               type="text"
               id="company"
@@ -70,7 +74,6 @@ const Register = () => {
               onChange={companyValueChk}
             />
             <input type="submit" value="가입하기" />
-            <div></div>
           </form>
         </div>
       </div>
