@@ -2,8 +2,8 @@ from django.db import models
 from django.conf import settings
 from community.models import Post
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-
-
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt import tokens
 class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
@@ -52,6 +52,13 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.nick_name
+
+    def tokens(self):
+        refresh_tokens = RefreshToken.for_user(self)
+        return{
+            'refresh' : str(refresh_tokens),
+            'access' : str(tokens.access_token)
+        }
 
 class BookMark(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

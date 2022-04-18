@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 #drf permission
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from rest_framework.decorators import permission_classes, authentication_classes
+from rest_framework.decorators import permission_classes, authentication_classes, api_view
 
 from rest_framework_jwt.settings import api_settings
 
