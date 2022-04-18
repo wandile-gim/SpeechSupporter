@@ -25,7 +25,7 @@ const Aivle = () => {
     };
     const runPosenet = async () => {
         const posenet_model = await posenet.load({
-            inputResolution: { width: 1000, height: 500 },
+            inputResolution: { width: 640, height: 480 },
             scale: 0.8,
         });
         //

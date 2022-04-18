@@ -1,19 +1,26 @@
 @import "./reset.css";
-
-body {
-  background-color: #f8fafc;
+@font-face {
+  font-family: "twayair";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-.logo {
-  position: absolute;
-  top: -20px;
-  left: 10px;
+body {
+  background-image: linear-gradient(to right, #7a88ff, #7affaf);
+}
+
+.logo_container {
+  width: 140px;
+  height: 63px;
 }
 
 .container {
   width: 100vw;
   height: 100vh;
   display: flex;
+  background-color: rgba(255, 255, 255, 0.2);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -24,22 +31,22 @@ body {
 }
 
 .neckless_front {
-  margin-top: -45px;
+  margin-top: -20vh;
   margin-right: 20px;
   width: 30px;
   height: 170px;
-  background-color: rgb(55, 63, 87);
+  background-color: #0a2b3a;
   border-bottom-left-radius: 14px;
   transform: rotate(-25deg);
   z-index: 1;
 }
 
 .neckless_back {
-  margin-top: -45px;
+  margin-top: -20vh;
   width: 30px;
   height: 170px;
   margin-left: 35px;
-  background-color: rgb(55, 63, 87);
+  background-color: #0a2b3a;
   transform: rotate(30deg);
   border-bottom-right-radius: 100px;
   z-index: -99;
@@ -47,28 +54,31 @@ body {
 
 .App {
   border-radius: 20px;
-  width: 356px;
-  height: 575px;
+  border: 0.2px solid rgba(0, 0, 0, 0.2);
+  width: 400px;
+  height: 580px;
   display: flex;
   flex-direction: column;
   align-items: center;
   transform: rotateY(360deg);
   transition: all 1.5s ease-in-out;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 12px 10px 0px 0px #333;
   margin-top: -35px;
-  box-shadow: 0 0 10px 5px rgb(225, 225, 226);
 }
 
 .App__rotate {
   border-radius: 20px;
-  width: 356px;
-  height: 575px;
+  border: 0.2px solid rgba(0, 0, 0, 0.2);
+  width: 400px;
+  height: 580px;
   display: flex;
   flex-direction: column;
   align-items: center;
   transform: rotateY(0deg);
   transition: all 1.5s ease-in-out;
-  background-color: white;
+  box-shadow: 12px 10px 0px 0px #333;
+  background-color: rgba(255, 255, 255, 0.5);
   margin-top: -35px;
 }
 
@@ -77,25 +87,22 @@ body {
   border-radius: inherit;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
   height: 80px;
-  background-color: #4876ef;
+  background-color: rgba(58, 134, 255, 0.6);
 }
 
 .hole {
   position: absolute;
-  background-color: #f8fafc;
+  background-image: linear-gradient(to right, #7a88ff, #7affaf);
+  opacity: 0.6;
   width: 70px;
   height: 1.5vh;
-  border: none;
+  border: 1px solid black;
+  box-shadow: 0px 0px 0px 0px #333;
   border-radius: 20px;
   margin-top: 20px;
-}
-
-.App h1 {
-  margin-right: 155px;
-  margin-top: 40px;
-  font-size: 24px;
-  color: white;
+  z-index: -99;
 }
 
 .img__container {
@@ -106,19 +113,6 @@ body {
   border-radius: 50%;
   transition: all 0.1s linear 0.7s;
   background-color: white;
-}
-
-.App_shadow {
-  position: absolute;
-  border: 2px solid black;
-  border-radius: 15px;
-  width: 30vw;
-  height: 80vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: whitesmoke;
-  z-index: -1;
 }
 
 .test {
@@ -132,20 +126,22 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: all 3s linear;
+  transition: all 1.5s ease-in-out;
   margin-top: 30px;
 }
 
 #login__form input {
   margin-top: 10px;
-  width: 250px;
-  border-radius: 15px;
+  width: 300px;
   border: none;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
   height: 50px;
-  background-color: whitesmoke;
+  background-color: rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
+  transition: all 1.5s ease-in-out;
   outline: none;
-  box-shadow: 0 0 3px 1px rgb(225, 225, 226);
+  color: white;
 }
 
 .id_input,
@@ -154,30 +150,26 @@ body {
   padding-top: 20px;
 }
 
-.id_label {
-  position: absolute;
-  cursor: text;
-  font-size: 13px;
-  top: 204px;
-  left: 80px;
-  color: #8c8c8c;
-  transition: all 0.2s linear;
+.id__container,
+.password__container {
+  position: relative;
 }
 
+.id_label,
 .password_label {
   position: absolute;
   cursor: text;
   font-size: 13px;
-  top: 264px;
-  left: 80px;
-  color: #8c8c8c;
+  top: 30px;
+  left: 30px;
+  color: white;
   transition: all 0.2s linear;
 }
 
 .id_input:focus ~ .id_label {
   font-size: 10px;
-  top: 198px;
-  left: 76px;
+  top: 25px;
+  left: 21px;
   color: #8c8c8c;
   transition: all 0.2s linear;
 }
@@ -185,15 +177,15 @@ body {
 .id_label__focused {
   position: absolute;
   font-size: 10px;
-  top: 198px;
-  left: 76px;
-  color: #8c8c8c;
+  top: 25px;
+  left: 21px;
+  color: white;
 }
 
 .password_input:focus ~ .password_label {
   font-size: 10px;
-  top: 260px;
-  left: 76px;
+  top: 25px;
+  left: 21px;
   color: #8c8c8c;
   transition: all 0.2s linear;
 }
@@ -201,21 +193,22 @@ body {
 .password_label__focused {
   position: absolute;
   font-size: 10px;
-  top: 260px;
-  left: 76px;
-  color: #8c8c8c;
+  top: 25px;
+  left: 21px;
+  color: white;
 }
 
 .regist__container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  width: 300px;
   height: 50px;
-  background-color: white;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.04);
   border-radius: 13px;
-  border: 1px solid white;
-  margin-top: 40px;
+  margin-top: 50px;
+  transition: all 1.5s ease-in-out;
 }
 
 .link__container {
@@ -223,24 +216,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
+  width: 300px;
   height: 50px;
-  background-color: white;
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.04);
   border-radius: 13px;
-  border: 1px solid white;
-  margin-top: 5px;
+  margin-top: 15px;
   opacity: 100%;
-  transition: all 0.1s linear 0.7s;
+  transition: all 1.5s ease-in-out;
 }
 
 .link__container a {
-  color: #333;
+  color: white;
   text-decoration: none;
   margin-left: 10px;
 }
 
 .regist__container a {
-  color: #333;
+  color: white;
   text-decoration: none;
   margin-left: 10px;
 }
