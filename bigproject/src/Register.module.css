@@ -7,6 +7,13 @@
     }
 }
 
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     background-image: linear-gradient(to left, #7a88ff, #7affaf);
 }
@@ -24,7 +31,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 120px;
+    margin-left: 20px;
 }
 
 .logo_container {
@@ -61,8 +68,8 @@ body {
 .App__rotate {
     border-radius: 20px;
     border: 0.2px solid rgba(0, 0, 0, 0.2);
-    width: 356px;
-    height: 550px;
+    width: 30vw;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -85,7 +92,7 @@ body {
 
 .hole {
     position: absolute;
-    background-image: linear-gradient(to right, #7a88ff, #7affaf);
+    background-image: linear-gradient(to left, #7a88ff, #7affaf);
     opacity: 0.6;
     width: 70px;
     height: 1.5vh;
@@ -101,7 +108,7 @@ body {
     width: 170px;
     height: 170px;
     border-radius: 50%;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .img__container img {
@@ -118,6 +125,7 @@ body {
 }
 
 .employee__card__text__container span {
+    font-family: GmarketSansMedium;
     width: 200px;
     margin-top: 20px;
 }
@@ -129,10 +137,12 @@ body {
     width: 400px;
     height: 80vh;
     background-color: rgba(255, 255, 255, 0.5);
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .input__container h1 {
+    font-family: GmarketSansMedium;
+    color: white;
     font-size: 20px;
     margin-top: 50px;
 }
@@ -142,12 +152,15 @@ body {
     height: 150px;
     border: none;
     border-radius: 50%;
-    margin-top: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .upload__img__container img {
     width: 150px;
     height: 150px;
+    border-radius: 50%;
 }
 
 .form__container form {
@@ -166,6 +179,7 @@ body {
     border-radius: 20px;
     margin-top: 20px;
     text-align: center;
+    font-family: GmarketSansMedium;
 }
 
 .form__container form input:last-child {

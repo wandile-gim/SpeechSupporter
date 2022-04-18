@@ -80,21 +80,25 @@ const MainPage = () => {
                                 <img className='logo' src='aivle.png' />
                             </div>
                             <form id='login__form'>
-                                <input id='id' type='text' className='id_input' onChange={idValueChk} require autoComplete='off' />
-                                <label htmlFor='id' className={idInputState ? 'id_label__focused' : 'id_label'}>
-                                    아이디를 입력해주세요.
-                                </label>
-                                <input
-                                    type='password'
-                                    id='password'
-                                    className='password_input'
-                                    onChange={passwordValueChk}
-                                    required
-                                    autoComplete='off'
-                                />
-                                <label htmlFor='password' className={passwordInputState ? 'password_label__focused' : 'password_label'}>
-                                    패스워드를 입력해주세요.
-                                </label>
+                                <div className='id__container'>
+                                    <input id='id' type='text' className='id_input' onChange={idValueChk} require autoComplete='off' />
+                                    <label htmlFor='id' className={idInputState ? 'id_label__focused' : 'id_label'}>
+                                        아이디를 입력해주세요.
+                                    </label>
+                                </div>
+                                <div className='password__container'>
+                                    <input
+                                        type='password'
+                                        id='password'
+                                        className='password_input'
+                                        onChange={passwordValueChk}
+                                        required
+                                        autoComplete='off'
+                                    />
+                                    <label htmlFor='password' className={passwordInputState ? 'password_label__focused' : 'password_label'}>
+                                        패스워드를 입력해주세요.
+                                    </label>
+                                </div>
                                 <input type='submit' value='로그인' />
                             </form>
                             <div className='regist__container'>

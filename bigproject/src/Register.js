@@ -1,10 +1,18 @@
 import styles from './Register.module.css';
-import { FaIdBadge } from 'react-icons/fa';
 import { useState } from 'react';
+
 const Register = () => {
     const [idValue, setIdValue] = useState('');
     const [emailValue, setEmailValue] = useState('');
     const [companyValue, setCompanyValue] = useState('');
+    const [imgFile, setImageFile] = useState(
+        'https://images-ext-2.discordapp.net/external/RwTCihXk-8XznIG1dqikm3s5sffzfnXvWAKVvWhZsH4/https/cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png?width=936&height=936'
+    );
+
+    const getImageFile = (event) => {
+        const file = event.target.files;
+        setImageFile(file[0].name);
+    };
 
     const idValueChk = (event) => {
         const value = event.target.value;
@@ -35,7 +43,7 @@ const Register = () => {
                         <img className={styles.logo} src='aivle.png' />
                     </div>
                     <div className={styles.img__container}>
-                        <img src='https://images-ext-2.discordapp.net/external/RwTCihXk-8XznIG1dqikm3s5sffzfnXvWAKVvWhZsH4/https/cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png?width=936&height=936' />
+                        <img src={imgFile} />
                     </div>
                     <div className={styles.employee__card__text__container}>
                         <span>{idValue}</span>
@@ -47,7 +55,8 @@ const Register = () => {
             <div className={styles.input__container}>
                 <h1>이력서</h1>
                 <div className={styles.upload__img__container}>
-                    <img src='https://images-ext-2.discordapp.net/external/RwTCihXk-8XznIG1dqikm3s5sffzfnXvWAKVvWhZsH4/https/cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png?width=936&height=936' />
+                    <img src={imgFile} />
+                    <input type='file' onChange={getImageFile} />
                 </div>
                 <div className={styles.form__container}>
                     <form method='post'>

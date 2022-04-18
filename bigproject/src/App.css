@@ -1,4 +1,10 @@
 @import './reset.css';
+@font-face {
+    font-family: 'twayair';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
     background-image: linear-gradient(to right, #7a88ff, #7affaf);
@@ -24,7 +30,7 @@ body {
 }
 
 .neckless_front {
-    margin-top: -45px;
+    margin-top: -100px;
     margin-right: 20px;
     width: 30px;
     height: 170px;
@@ -35,7 +41,7 @@ body {
 }
 
 .neckless_back {
-    margin-top: -45px;
+    margin-top: -100px;
     width: 30px;
     height: 170px;
     margin-left: 35px;
@@ -48,8 +54,8 @@ body {
 .App {
     border-radius: 20px;
     border: 0.2px solid rgba(0, 0, 0, 0.2);
-    width: 356px;
-    height: 575px;
+    width: 30vw;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,8 +69,8 @@ body {
 .App__rotate {
     border-radius: 20px;
     border: 0.2px solid rgba(0, 0, 0, 0.2);
-    width: 356px;
-    height: 575px;
+    width: 30vw;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -132,19 +138,20 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: all 3s linear;
+    transition: all 1.5s ease-in-out;
     margin-top: 30px;
 }
 
 #login__form input {
     margin-top: 10px;
-    width: 250px;
+    width: 22vw;
     border: none;
     box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     height: 50px;
     background-color: rgba(0, 0, 0, 0.04);
     box-sizing: border-box;
+    transition: all 1.5s ease-in-out;
     outline: none;
     color: white;
 }
@@ -155,30 +162,26 @@ body {
     padding-top: 20px;
 }
 
-.id_label {
-    position: absolute;
-    cursor: text;
-    font-size: 13px;
-    top: 204px;
-    left: 80px;
-    color: white;
-    transition: all 0.2s linear;
+.id__container,
+.password__container {
+    position: relative;
 }
 
+.id_label,
 .password_label {
     position: absolute;
     cursor: text;
     font-size: 13px;
-    top: 264px;
-    left: 80px;
+    top: 30px;
+    left: 30px;
     color: white;
     transition: all 0.2s linear;
 }
 
 .id_input:focus ~ .id_label {
     font-size: 10px;
-    top: 198px;
-    left: 76px;
+    top: 25px;
+    left: 21px;
     color: #8c8c8c;
     transition: all 0.2s linear;
 }
@@ -186,15 +189,15 @@ body {
 .id_label__focused {
     position: absolute;
     font-size: 10px;
-    top: 198px;
-    left: 76px;
+    top: 25px;
+    left: 21px;
     color: white;
 }
 
 .password_input:focus ~ .password_label {
     font-size: 10px;
-    top: 260px;
-    left: 76px;
+    top: 25px;
+    left: 21px;
     color: #8c8c8c;
     transition: all 0.2s linear;
 }
@@ -202,8 +205,8 @@ body {
 .password_label__focused {
     position: absolute;
     font-size: 10px;
-    top: 260px;
-    left: 76px;
+    top: 25px;
+    left: 21px;
     color: white;
 }
 
@@ -211,12 +214,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 250px;
+    width: 22vw;
     height: 50px;
     box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     background-color: rgba(0, 0, 0, 0.04);
     border-radius: 13px;
     margin-top: 50px;
+    transition: all 1.5s ease-in-out;
 }
 
 .link__container {
@@ -224,14 +228,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 250px;
+    width: 22vw;
     height: 50px;
     box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     background-color: rgba(0, 0, 0, 0.04);
     border-radius: 13px;
     margin-top: 15px;
     opacity: 100%;
-    transition: all 0.1s linear 0.7s;
+    transition: all 1.5s ease-in-out;
 }
 
 .link__container a {
