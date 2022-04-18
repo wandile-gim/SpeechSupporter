@@ -1,4 +1,7 @@
 from dataclasses import fields
+from importlib.metadata import requires
+from wsgiref import validate
+from wsgiref.validate import validator
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
@@ -69,3 +72,30 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email', 'nick_name', 'wannabe', 'profile_img']
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
+    old_password = serializers.CharField(write_only=True, required=True)
+
+    class Meta:
+        model = User
+        fields = ['old_password', 'password', 'password2']
+    
+    def validate(self, attrs):
+        if attrs.get('password') != attrs.get('password2'):
+            raise serializers.ValidationError({
+                "password" : "Password field are not pair"})
+        return attrs
+
+    def validate_old_password(self, value):
+        #check user
+        request = self.context.get('request')
+        if request and hasattr(request, "user"):
+            user = request.user
+
+        if not user.check_password(value):
+            raise serializers.ValidationError({
+                "old_password" : "Old password is not correct"
+            })
+        return value

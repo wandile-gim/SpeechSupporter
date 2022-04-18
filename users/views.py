@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
 
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 #drf permission
@@ -15,7 +14,7 @@ from rest_framework import status
 
 from users.models import User
 
-from users.serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer
+from users.serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer, ChangePasswordSerializer
 import jwt, datetime
 
 
@@ -57,6 +56,7 @@ class LoginView(GenericAPIView):
         if user['email'] == "None":
             return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message':"fail(email)"})
         
+        #Customizing Response 
         response = Response()
         #프론트엔드에 보여지는 것을 막고, 백엔드에서만 사용하기 위해 토큰을 쿠키에 저장
         response.set_cookie(key='jwt', value=user['token'], httponly=True)
@@ -114,6 +114,8 @@ class UserView(APIView):
         # return Response(serializer.data)
         return Response(context)
 
+#모든 유저 조회 뷰도 필요함.
+@permission_classes([IsAuthenticated])
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
@@ -123,9 +125,27 @@ class LogoutView(APIView):
         }
         return response
 
+@permission_classes([IsAuthenticated])
+class ChangePasswordView(UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(status=status.HTTP_409_CONFLICT, data = {'message': serializer.errors})
+
+        self.object.set_password(request.data['password'])
+        self.object.save()
+        # instance.save()
+        
+        return Response({"message" : "password has been changed"}, status=status.HTTP_200_OK)
 
 @permission_classes([IsAuthenticated]) 
 class Test(GenericAPIView):
     serializer_class = UserLoginSerializer
     def get(self, request, *args, **kwargs):
-        return Response({'message':'good'},status=status.HTTP_200_OK)
+        return Response({'message':'good'}, status=status.HTTP_200_OK)
