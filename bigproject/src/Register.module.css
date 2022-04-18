@@ -127,8 +127,26 @@ body {
 
 .employee__card__text__container span {
   font-family: GmarketSansMedium;
+  font-size: 10px;
   width: 200px;
-  margin-top: 20px;
+  margin-bottom: 100px;
+  text-align: center;
+}
+
+.employee__card__text__container span:first-child {
+  font-family: GmarketSansMedium;
+  font-size: 30px;
+  width: 200px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.employee__card__text__container span:last-child {
+  font-family: GmarketSansMedium;
+  font-size: 25px;
+  width: 200px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .input__container {
@@ -142,9 +160,9 @@ body {
 
 .input__container h1 {
   font-family: GmarketSansMedium;
-  color: white;
-  font-size: 20px;
-  margin-top: 50px;
+  color: black;
+  font-size: 30px;
+  margin-top: 40px;
 }
 
 .upload__img__container {
@@ -163,6 +181,15 @@ body {
   border-radius: 50%;
 }
 
+.upload__img__container label {
+  position: absolute;
+  cursor: pointer;
+}
+
+.upload__img__container input {
+  visibility: hidden;
+}
+
 .form__container form {
   display: flex;
   flex-direction: column;
@@ -177,6 +204,12 @@ body {
   font-family: GmarketSansMedium;
 }
 
+.form__container form img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+}
+
 .form__container form input {
   box-sizing: border-box;
   width: 250px;
@@ -185,13 +218,17 @@ body {
   outline: none;
   border-radius: 20px;
   margin-top: 10px;
-  text-align: center;
+  text-align: left;
+  padding-inline-start: 30px;
   font-family: GmarketSansMedium;
 }
 
 .form__container form input:last-child {
   width: 150px;
   height: 40px;
+  text-align: center;
+  padding-inline-start: 0px;
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: 40px;
+  cursor: pointer;
 }
