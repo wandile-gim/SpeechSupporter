@@ -181,8 +181,11 @@ class ResetPasswordView(GenericAPIView): # 패스워드 초기화 1  - 이메일
     
             Util.send_email(data) # 이메일 전송 - Gmail X
 
-        serializer.is_valid(raise_exception=True)
-        
+        else: # DB에 해당 이메일이 존재하지 않을 떄,
+            return Response({"message" : "Invalid Email"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        serializer.is_valid(raise_exception=True)        
+
         # 이메일로 링크만 전송(링크에 토큰과 userID 포함)
         return Response({'message' : 'You can reset your password checking your email'}, status = status.HTTP_200_OK) 
 
