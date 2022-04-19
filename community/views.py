@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from os import stat
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .serializers import *
@@ -64,38 +65,64 @@ class PostCreateAPIView(CreateAPIView):
 #     queryset = Comment.objects.all()
 #     serializer_class = CommentSerializer
 
-class CommentCreateRetreiveAPIView(ModelViewSet):
-    serializer_class = CommentSerializer
+# class CommentCreateRetreiveAPIView(ModelViewSet):    
+#     http_method_names = ['get', 'post']
+#     serializer_class = CommentSerializer
+#     queryset = Comment.objects.all()
+
+#     def perform_create(self, serializer):
+#         serializer = self.get_serializer(data=self.request.data)
+
+#         if serializer.is_valid(raise_exception=True):
+#             serializer.save(author_id = self.request.user.pk, post_id=self.kwargs.get('pk'))
+#             return Response(status=status.HTTP_201_CREATED, data = {'data' : serializer.validated_data})
+
+#         if serializer.errors:
+#             print(serializer.errors)
+class CommentCreateAPIView(CreateAPIView):
     queryset = Comment.objects.all()
-
-    def perform_create(self, serializer):
-        serializer = self.get_serializer(data=self.request.data)
-
+    serializer_class = CommentSerializer
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(author_id = self.request.user.pk, post_id=self.kwargs.get('post_id'))
-            return Response(status=status.HTTP_201_CREATED, data = {'data' : serializer.validated_data})
+            print(request.user)
+            serializer.save(post_id=self.kwargs.get('pk'))
+        return Response(status=status.HTTP_201_CREATED, data={"message": "comment created"})
 
-        if serializer.errors:
-            print(serializer.errors)
 
-    def get_queryset(self):
-        super().get_queryset().filter(post_id = self.kwargs['post_id'])
-
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, many = True)
-        return Response(serializer.data)
+def get_prev_next(instance):
+    try:
+        prev = instance.get_previous_by_update_dt()
+    except instance.DoesNotExist:
+        prev = None
     
+    try:
+        next_ = instance.get_next_by_update_dt()
+    except instance.DoesNotExist:
+        next_ = None
+
+    return prev, next_
+
 
 class PostRetreiveAPIView(RetrieveAPIView):
     serializer_class = PostDetailSerializer
-    queryset = Post.objects.all().prefetch_related('tags', 'comment_set')
+    queryset = Post.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
-        obj = self.get_object()
-        obj.view_count += 1
-        obj.save(update_fields=("view_count",))
-        return super().retrieve(request,*args, **kwargs)
+        instance = self.get_object()
+        prevInstance, nextInstance = get_prev_next(instance)
+        commentList = instance.comment_set.all()
+
+        data = {
+            'post' : instance,
+            'prevPost' : prevInstance,
+            'nextPost' : nextInstance,
+            'commentList' : commentList,
+        }
+        serializer = self.get_serializer(instance=data)
+        instance.view_count += 1
+        instance.save(update_fields=("view_count",))
+        return Response(serializer.data)
 
 
 # class PostLikeAPIView(UpdateAPIView):
