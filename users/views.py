@@ -14,9 +14,15 @@ from rest_framework import status
 
 from users.models import User
 
-from users.serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer, ChangePasswordSerializer
+from users.serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer, ChangePasswordSerializer, ResetPasswordSerializer, SetPasswordSerializer
 import jwt, datetime
 
+from django.contrib.auth.tokens import PasswordResetTokenGenerator 
+from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+from users.utils import Util
 
 # class RegisterView(APIView):
 #     def post(self, request):
@@ -149,3 +155,58 @@ class Test(GenericAPIView):
     serializer_class = UserLoginSerializer
     def get(self, request, *args, **kwargs):
         return Response({'message':'good'}, status=status.HTTP_200_OK)
+
+class ResetPasswordView(GenericAPIView): # 패스워드 초기화 1  - 이메일로 토큰, userID이 담긴 링크 전송 -> 이메일 필요
+    serializer = ResetPasswordSerializer
+
+    def post(self, request):
+
+        serializer = self.serializer(data = request.data)
+
+        email = request.data.get('email', '')
+
+        if User.objects.filter(email=email).exists():
+
+            user = User.objects.get(email = email)
+            uidb64 = urlsafe_base64_encode(smart_bytes(user.id)) # 안전한 url 생성
+            token = PasswordResetTokenGenerator().make_token(user) # 토큰 생성
+            current_site = get_current_site(request = request).domain 
+            relativeLink = reverse(
+                'users:reset_confirm', kwargs={'uidb64' : uidb64, 'token' : token })
+            absurl = 'http://' + current_site + relativeLink # 비밀 번호 변경 토큰 URL 링크 생성
+            email_body = 'Hi, ' + user.nick_name + '\n Thank you for Using Speech Supporter \n\n Use Link below to reset your password \n\n' + absurl
+            
+            data = {'email_body' : email_body, 'to_email' : user.email, # 전송 이메일 내용
+                    'email_subject' : '[Team. AIVLE] Reset your Password'}
+    
+            Util.send_email(data) # 이메일 전송 - Gmail X
+
+        serializer.is_valid(raise_exception=True)
+        
+        # 이메일로 링크만 전송(링크에 토큰과 userID 포함)
+        return Response({'message' : 'You can reset your password checking your email'}, status = status.HTTP_200_OK) 
+
+class CheckPasswordToken(GenericAPIView): # 패스워드 초기화 2- 이메일 URL 클릭 시
+    def get(self, request, uidb64, token):
+        try:
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id = id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token): # 토큰이 만료되거나 인가되지 않는 사용자
+                return Response({"message" : "The Reset Link is not valid, Plz try again new request"}, status=status.HTTP_401_UNAUTHORIZED)
+
+            # 토큰과 userID와 함께 비밀번호 설정 화면으로 전환(비밀번호 설정 화면은 추후 제작 필요)
+            return Response({'success' : True, 'message' : 'Credentials Valid', 'uidb64' : uidb64, 'token' : token}, status=status.HTTP_200_OK)    
+
+        except DjangoUnicodeDecodeError:
+            if not PasswordResetTokenGenerator().check_token(user):
+                return Response({"message" : "The Reset Link is not valid, Plz try again new request"}, status=status.HTTP_401_UNAUTHORIZED)
+
+class SetPasswordView(UpdateAPIView): # 패스워드 초기화 3 - 토큰 확인 후 비밀번호 변경 -> 비밀번호1, 비밀번호2, 토큰, userID 필요
+    serializer_class = SetPasswordSerializer
+    
+    def update(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response({"message" : "Password Rest Success!!"}, status=status.HTTP_200_OK)
