@@ -113,9 +113,9 @@ WSGI_APPLICATION = 'speechsupporter.wsgi.application'
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME' : 'big_speechsupporter',
+        'NAME' : 'practice6',
         'USER': 'root', 
-        'PASSWORD': 'bestforall1!', 
+        'PASSWORD': 'a1s2d3f4', 
         'HOST': 'localhost', 
         'PORT': '3306', 
     }
@@ -169,5 +169,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 APPEND_SLASH=False
-
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_POST = '587'
+EMAIL_HOST_USER = 'speechhelpermanager@gmail.com' # Speech Support 대표 Gmail - 변경 X
+EMAIL_HOST_PASSWORD = 'Aivle2022!'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # AUTHENTICATION_BACKENDS = ['users.auth_backends.EmailBackend']
