@@ -1,253 +1,253 @@
-@import './reset.css';
+@import "./reset.css";
 @font-face {
-    font-family: 'twayair';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "twayair";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-    background-color: rgb(248, 250, 252);
+  background-color: rgb(248, 250, 252);
 }
 
 .logo_container {
-    width: 140px;
-    height: 63px;
+  width: 140px;
+  height: 63px;
 }
 
 .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    background-color: rgb(248, 250, 252);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: rgb(248, 250, 252);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .neckless__container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .neckless_front {
-    margin-top: -20vh;
-    margin-right: 20px;
-    width: 30px;
-    height: 170px;
-    background-color: #0a2b3a;
-    border-bottom-left-radius: 14px;
-    transform: rotate(-25deg);
-    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
-    z-index: 10;
+  margin-top: -20vh;
+  margin-right: 20px;
+  width: 30px;
+  height: 170px;
+  background-color: #0a2b3a;
+  border-bottom-left-radius: 14px;
+  transform: rotate(-25deg);
+  box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+  z-index: 10;
 }
 
 .neckless_back {
-    margin-top: -20vh;
-    width: 30px;
-    height: 170px;
-    margin-left: 35px;
-    background-color: #0a2b3a;
-    transform: rotate(30deg);
-    border-bottom-right-radius: 100px;
-    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+  margin-top: -20vh;
+  width: 30px;
+  height: 170px;
+  margin-left: 35px;
+  background-color: #0a2b3a;
+  transform: rotate(30deg);
+  border-bottom-right-radius: 100px;
+  box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
 }
 
 .App {
-    border-radius: 20px;
-    border: 0.2px solid rgba(0, 0, 0, 0.2);
-    width: 400px;
-    height: 580px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform: rotateY(360deg);
-    transition: all 1.5s ease-in-out;
-    background-color: white;
-    border: none;
-    box-shadow: 0 0 10px 5px rgb(225, 225, 226);
-    margin-top: -35px;
+  border-radius: 20px;
+  border: 0.2px solid rgba(0, 0, 0, 0.2);
+  width: 400px;
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotateY(360deg);
+  transition: all 1.5s ease-in-out;
+  background-color: white;
+  border: none;
+  box-shadow: 0 0 10px 5px rgb(225, 225, 226);
+  margin-top: -35px;
 }
 
 .App__rotate {
-    border-radius: 20px;
-    border: none;
-    width: 400px;
-    height: 580px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform: rotateY(0deg);
-    transition: all 1.5s ease-in-out;
-    box-shadow: 0 0 10px 5px rgb(225, 225, 226);
-    background-color: white;
-    margin-top: -35px;
+  border-radius: 20px;
+  border: none;
+  width: 400px;
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: rotateY(0deg);
+  box-shadow: 0 0 10px 5px rgb(225, 225, 226);
+  background-color: white;
+  margin-top: -35px;
 }
 
 .top {
-    width: inherit;
-    border-radius: inherit;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border: none;
-    height: 80px;
-    box-shadow: 0 0 10px 0 rgb(225, 225, 226);
-    background-color: #4876ef;
-    z-index: 6;
+  width: inherit;
+  border-radius: inherit;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border: none;
+  height: 80px;
+  box-shadow: 0 0 10px 0 rgb(225, 225, 226);
+  background-color: #4876ef;
+  z-index: 6;
 }
 
 .hole {
-    position: absolute;
-    background-color: rgb(248, 250, 252);
-    opacity: 0.6;
-    width: 70px;
-    height: 1.5vh;
-    border: none;
-    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
-    border-radius: 20px;
-    margin-top: 20px;
-    z-index: 8;
+  position: absolute;
+  background-color: rgb(248, 250, 252);
+  opacity: 0.6;
+  width: 70px;
+  height: 1.5vh;
+  border: none;
+  box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+  border-radius: 20px;
+  margin-top: 20px;
+  z-index: 8;
 }
 
 .img__container {
-    margin-top: 40px;
-    width: 170px;
-    height: 170px;
-    transform: scale(1);
-    border-radius: 50%;
-    transition: all 0.1s linear 0.7s;
-    background-color: white;
+  margin-top: 40px;
+  width: 170px;
+  height: 170px;
+  transform: scale(1);
+  border-radius: 50%;
+  transition: all 0.1s linear 0.7s;
+  background-color: white;
 }
 
 .test {
-    position: absolute;
-    top: 30%;
-    left: 20%;
+  position: absolute;
+  top: 30%;
+  left: 20%;
 }
 
 #login__form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: all 1.5s ease-in-out;
-    margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 1.5s ease-in-out;
+  margin-top: 30px;
 }
 
 #login__form input {
-    margin-top: 10px;
-    width: 300px;
-    border: none;
-    border-radius: 15px;
-    height: 50px;
-    box-shadow: 0 0 5px 1px rgb(225, 225, 226);
-    box-sizing: border-box;
-    transition: all 1.5s ease-in-out;
-    outline: none;
-    color: rgba(0, 0, 0, 0.863);
+  margin-top: 10px;
+  width: 300px;
+  border: none;
+  border-radius: 15px;
+  height: 50px;
+  box-shadow: 0 0 5px 1px rgb(225, 225, 226);
+  box-sizing: border-box;
+  transition: all 1.5s ease-in-out;
+  outline: none;
+  color: rgba(0, 0, 0, 0.863);
 }
 
 .id_input,
 .password_input {
-    padding-left: 21px;
-    padding-top: 20px;
+  padding-left: 21px;
+  padding-top: 20px;
 }
 
 .id__container,
 .password__container {
-    position: relative;
+  position: relative;
 }
 
 .id_label,
 .password_label {
-    position: absolute;
-    cursor: text;
-    font-size: 13px;
-    top: 30px;
-    left: 30px;
-    color: rgba(0, 0, 0, 0.863);
-    transition: all 0.2s linear;
+  position: absolute;
+  cursor: text;
+  font-size: 13px;
+  top: 30px;
+  left: 30px;
+  color: rgba(0, 0, 0, 0.863);
+  transition: all 0.2s linear;
 }
 
 .id_input:focus ~ .id_label {
-    font-size: 10px;
-    top: 25px;
-    left: 21px;
-    color: #8c8c8c;
-    transition: all 0.2s linear;
+  font-size: 10px;
+  top: 25px;
+  left: 21px;
+  color: #8c8c8c;
+  transition: all 0.2s linear;
 }
 
 .id_label__focused {
-    position: absolute;
-    font-size: 10px;
-    top: 25px;
-    left: 21px;
-    color: white;
+  position: absolute;
+  font-size: 10px;
+  top: 25px;
+  left: 21px;
+  color: white;
 }
 
 .password_input:focus ~ .password_label {
-    font-size: 10px;
-    top: 25px;
-    left: 21px;
-    color: #8c8c8c;
-    transition: all 0.2s linear;
+  font-size: 10px;
+  top: 25px;
+  left: 21px;
+  color: #8c8c8c;
+  transition: all 0.2s linear;
 }
 
 .password_label__focused {
-    position: absolute;
-    font-size: 10px;
-    top: 25px;
-    left: 21px;
-    color: white;
+  position: absolute;
+  font-size: 10px;
+  top: 25px;
+  left: 21px;
+  color: white;
 }
 
 .regist__container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    height: 50px;
-    box-shadow: 0 0 5px 1px rgb(225, 225, 226);
-    background-color: rgba(0, 0, 0, 0.04);
-    border-radius: 13px;
-    margin-top: 50px;
-    transition: all 1.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 50px;
+  box-shadow: 0 0 5px 1px rgb(225, 225, 226);
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 13px;
+  margin-top: 50px;
+  transition: all 1.5s ease-in-out;
 }
 
 .link__container {
-    visibility: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 300px;
-    height: 50px;
-    box-shadow: 0 0 5px 1px rgb(225, 225, 226);
-    background-color: rgba(0, 0, 0, 0.04);
-    border-radius: 13px;
-    margin-top: 15px;
-    opacity: 100%;
-    transition: all 1.5s ease-in-out;
+  visibility: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 50px;
+  box-shadow: 0 0 5px 1px rgb(225, 225, 226);
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 13px;
+  margin-top: 15px;
+  opacity: 100%;
+  transition: all 1.5s ease-in-out;
 }
 
 .link__container a {
-    color: rgba(0, 0, 0, 0.863);
-    text-decoration: none;
-    margin-left: 10px;
+  color: rgba(0, 0, 0, 0.863);
+  text-decoration: none;
+  margin-left: 10px;
 }
 
 .regist__container a {
-    color: rgba(0, 0, 0, 0.863);
-    text-decoration: none;
-    margin-left: 10px;
+  color: rgba(0, 0, 0, 0.863);
+  text-decoration: none;
+  margin-left: 10px;
 }
 
 .span {
-    text-decoration: none;
-    margin-bottom: 20px;
+  text-decoration: none;
+  margin-bottom: 20px;
 }
 
 .hidden,
 #hidden {
-    visibility: hidden;
-    opacity: 0%;
+  visibility: hidden;
+  opacity: 0%;
 }
