@@ -36,15 +36,19 @@ REST_FRAMEWORK = {
      'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근 가능
         # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근 가능
-        'rest_framework.permissions.AllowAny', # 누구나 접근 가능
+        # 'rest_framework.permissions.AllowAny', # 누구나 접근 가능
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
      ],
 	
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
         # 'rest_framework.permissions.IsAuthenticated',
-    ]
+    ], 
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
+
 JWT_AUTH = {
     'JWT_SECRET_KEY': SECRET_KEY,
     'JWT_ALGORITHM': 'HS256', # 암호화 알고리즘

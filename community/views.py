@@ -6,7 +6,10 @@ from users.models import *
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.decorators import permission_classes, authentication_classes, api_view
+
+from rest_framework.generics import GenericAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.response import Response
 
 
@@ -18,7 +21,8 @@ def post_create(request): # 글쓰기 - 내용, 제목
         data = JSONParser().parse(request)
         
         data['user'] = request.session.get('user')
-        serializer = PostSerializer(data=data)
+        print(data)
+        serializer = PostCreateSerializer(data=data)
         print(serializer)
 
         if serializer.is_valid():
@@ -35,6 +39,17 @@ def post_list(request): # 커뮤니티 조회
 
         return JsonResponse(serialzer.data, safe = False)
 
+# @permission_classes([IsAuthenticated])
+class PostCreateAPIView(CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostCreateSerializer
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data = request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user)
+        if serializer.errors:
+            print(serializer.errors)
+        return Response(serializer.data)
 
 class CommentCreateAPIView(CreateAPIView):
     queryset = Comment.objects.all()
@@ -66,3 +81,9 @@ class PostLikeAPIView(UpdateAPIView):
         self.perform_update(serializer)
 
         return Response(serializer.data)
+
+class PostUserSearchAPIView(GenericAPIView):
+    serializer_class = PostUserSearchSerializer
+
+    #posturl 테이블을 만들어서 해결.
+    #
