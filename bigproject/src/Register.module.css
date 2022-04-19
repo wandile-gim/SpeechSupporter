@@ -71,7 +71,7 @@ body {
   border-radius: 20px;
   border: 0.2px solid rgba(0, 0, 0, 0.2);
   width: 400px;
-  height: 580px;
+  height: 630px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,8 +130,10 @@ body {
 
 .employee__card__text__container span {
   font-family: GmarketSansMedium;
+  font-size: 10px;
   width: 200px;
-  margin-top: 20px;
+  margin-bottom: 100px;
+  text-align: center;
 }
 
 .input__container {
@@ -139,7 +141,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 400px;
-  height: 580px;
+  height: 630px;
   color: rgba(0, 0, 0, 0.863);
   background-color: rgb(234, 237, 244);
 }
@@ -147,24 +149,49 @@ body {
 .input__container h1 {
   font-family: GmarketSansMedium;
   color: rgba(0, 0, 0, 0.863);
-  font-size: 20px;
-  margin-top: 50px;
+  font-size: 24px;
+  margin-top: 20px;
 }
 
 .upload__img__container {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border: none;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
 .upload__img__container img {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
+}
+
+.employee__card__text__container span:first-child {
+  font-family: GmarketSansMedium;
+  font-size: 30px;
+  width: 200px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.employee__card__text__container span:last-child {
+  font-family: GmarketSansMedium;
+  font-size: 25px;
+  width: 200px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.upload__img__container label {
+  position: absolute;
+  cursor: pointer;
+}
+
+.upload__img__container input {
+  z-index: 100;
 }
 
 .form__container form {
@@ -174,21 +201,34 @@ body {
   margin-top: 15px;
 }
 
+.form__container form label {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: auto;
+  font-family: GmarketSansMedium;
+  color: rgba(0, 0, 0, 0.863);
+}
+
 .form__container form input {
   box-sizing: border-box;
   width: 250px;
-  height: 30px;
+  height: 40px;
   border: none;
   outline: none;
   border-radius: 20px;
-  margin-top: 20px;
-  text-align: center;
+  margin-top: 10px;
+  text-align: left;
+  padding-inline-start: 30px;
   font-family: GmarketSansMedium;
 }
 
 .form__container form input:last-child {
   width: 150px;
   height: 40px;
+  text-align: center;
+  padding-inline-start: 0px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+  margin-top: 30px;
+  cursor: pointer;
+  background-color: rgb(215, 217, 221);
 }

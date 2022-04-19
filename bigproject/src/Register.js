@@ -53,17 +53,21 @@ const Register = () => {
                 </div>
             </div>
             <div className={styles.input__container}>
-                <h1>이력서</h1>
+                <h1>지 원 서</h1>
                 <div className={styles.upload__img__container}>
                     <img src={imgFile} />
                     <input type='file' onChange={getImageFile} />
                 </div>
                 <div className={styles.form__container}>
                     <form method='post'>
-                        <input type='text' id='id' required onChange={idValueChk} />
-                        <input type='password' id='password' required />
-                        <input type='email' id='email' required onChange={emailValueChk} />
-                        <input type='text' id='company' required onChange={companyValueChk} />
+                        <label htmlFor='id'>아이디</label>
+                        <input placeholder='ID' type='text' id='id' required onChange={idValueChk} />
+                        <label htmlFor='password'>비밀번호</label>
+                        <input placeholder='Password' type='password' id='password' required />
+                        <label htmlFor='email'>e-mail</label>
+                        <input placeholder='e-mail' type='email' id='email' required onChange={emailValueChk} />
+                        <label htmlFor='company'>희망하는 기업</label>
+                        <input placeholder='Nickname으로 사용됩니다' type='text' id='company' required onChange={companyValueChk} />
                         <input type='submit' value='가입하기' />
                     </form>
                 </div>
