@@ -32,7 +32,7 @@ from users.utils import Util
 #             get_user_model().objects.create_user(**seriallizer.validated_data)
 #             return Response(status= status.HTTP_201_CREATED)    
 #         return Response(status= status.HTTP_400_BAD_REQUEST, data={'errors': seriallizer.errors})
-
+@permission_classes([AllowAny])
 class RegisterView(GenericAPIView):
     serializer_class = UserRegisterSerializer
     def post(self, request):
@@ -40,7 +40,7 @@ class RegisterView(GenericAPIView):
         #serializer (create) 메소드로 저장된 정보를 검사
         if seriallizer.is_valid(raise_exception=True):
             get_user_model().objects.create_user(**seriallizer.validated_data)
-            return Response(status= status.HTTP_201_CREATED)    
+            return Response(status= status.HTTP_201_CREATED, data={'message': "user info has been created"})    
         return Response(status= status.HTTP_400_BAD_REQUEST, data={'errors': seriallizer.errors})
 
         # 아래는 serializer를 통해 구현한 사용자 생성 로직
