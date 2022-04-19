@@ -56,7 +56,7 @@ const Register = () => {
                 <h1>지 원 서</h1>
                 <div className={styles.upload__img__container}>
                     <img src={imgFile} />
-                    <input id='file_upload' type='file' onChange={getImageFile} />
+                    <input type='file' onChange={getImageFile} />
                 </div>
                 <div className={styles.form__container}>
                     <form method='post'>
