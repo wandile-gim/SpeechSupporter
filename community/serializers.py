@@ -1,6 +1,8 @@
 from asyncore import read
 from dataclasses import fields
+from enum import unique
 from importlib.metadata import files
+from unicodedata import category
 from django.forms import CharField
 from rest_framework import serializers
 
@@ -9,14 +11,14 @@ from .models import *
 
 class PostCreateSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    # category = serializers.PrimaryKeyRelatedField(queryset=query)
+    # tags = serializers.PrimaryKeyRelatedField(queryset=query, many=True)
     class Meta:
         model = Post
-        fields = ['id','user','title', 'category', 'content']
-
+        fields = ['title', 'content','user','category', 'tags']
+    
 class PostListSerializer(serializers.ModelSerializer):
-    def get__user(self, obj):
-        return str(obj.user)
-
+    category = serializers.ReadOnlyField(source = 'category.name')
     class Meta:
         model = Post 
         fields = ['id', 'user', 'title', 'category','content', 'create_dt', 'like', 'view_count']
@@ -41,4 +43,18 @@ class PostUserSearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['user', 'title', '']
+        fields = ['user', 'title', ]
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['name']
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['name']
+
+class CateTagSerializer(serializers.Serializer):
+    cateList = serializers.ListField(child=serializers.CharField())
+    tagList = serializers.ListField(child=serializers.CharField())
