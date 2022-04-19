@@ -7,7 +7,7 @@
 }
 
 body {
-    background-image: linear-gradient(to right, #7a88ff, #7affaf);
+    background-color: rgb(248, 250, 252);
 }
 
 .logo_container {
@@ -19,7 +19,7 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgb(248, 250, 252);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -38,7 +38,8 @@ body {
     background-color: #0a2b3a;
     border-bottom-left-radius: 14px;
     transform: rotate(-25deg);
-    z-index: 1;
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+    z-index: 10;
 }
 
 .neckless_back {
@@ -49,7 +50,7 @@ body {
     background-color: #0a2b3a;
     transform: rotate(30deg);
     border-bottom-right-radius: 100px;
-    z-index: -99;
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
 }
 
 .App {
@@ -62,22 +63,24 @@ body {
     align-items: center;
     transform: rotateY(360deg);
     transition: all 1.5s ease-in-out;
-    background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 12px 10px 0px 0px #333;
+    background-color: white;
+    border: none;
+    box-shadow: 0 0 10px 5px rgb(225, 225, 226);
     margin-top: -35px;
 }
 
 .App__rotate {
     border-radius: 20px;
-    border: 0.2px solid rgba(0, 0, 0, 0.2);
+    border: none;
     width: 400px;
     height: 580px;
     display: flex;
     flex-direction: column;
     align-items: center;
     transform: rotateY(0deg);
-    box-shadow: 12px 10px 0px 0px #333;
-    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 1.5s ease-in-out;
+    box-shadow: 0 0 10px 5px rgb(225, 225, 226);
+    background-color: white;
     margin-top: -35px;
 }
 
@@ -86,22 +89,24 @@ body {
     border-radius: inherit;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    border: none;
     height: 80px;
-    background-color: rgba(58, 134, 255, 0.6);
+    box-shadow: 0 0 10px 0 rgb(225, 225, 226);
+    background-color: #4876ef;
+    z-index: 6;
 }
 
 .hole {
     position: absolute;
-    background-image: linear-gradient(to right, #7a88ff, #7affaf);
+    background-color: rgb(248, 250, 252);
     opacity: 0.6;
     width: 70px;
     height: 1.5vh;
-    border: 1px solid black;
-    box-shadow: 0px 0px 0px 0px #333;
+    border: none;
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
     border-radius: 20px;
     margin-top: 20px;
-    z-index: -99;
+    z-index: 8;
 }
 
 .img__container {
@@ -133,14 +138,13 @@ body {
     margin-top: 10px;
     width: 300px;
     border: none;
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     height: 50px;
-    background-color: rgba(0, 0, 0, 0.04);
+    box-shadow: 0 0 5px 1px rgb(225, 225, 226);
     box-sizing: border-box;
     transition: all 1.5s ease-in-out;
     outline: none;
-    color: white;
+    color: rgba(0, 0, 0, 0.863);
 }
 
 .id_input,
@@ -161,7 +165,7 @@ body {
     font-size: 13px;
     top: 30px;
     left: 30px;
-    color: white;
+    color: rgba(0, 0, 0, 0.863);
     transition: all 0.2s linear;
 }
 
@@ -203,7 +207,7 @@ body {
     align-items: center;
     width: 300px;
     height: 50px;
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px 1px rgb(225, 225, 226);
     background-color: rgba(0, 0, 0, 0.04);
     border-radius: 13px;
     margin-top: 50px;
@@ -217,7 +221,7 @@ body {
     align-items: center;
     width: 300px;
     height: 50px;
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px 1px rgb(225, 225, 226);
     background-color: rgba(0, 0, 0, 0.04);
     border-radius: 13px;
     margin-top: 15px;
@@ -226,13 +230,13 @@ body {
 }
 
 .link__container a {
-    color: white;
+    color: rgba(0, 0, 0, 0.863);
     text-decoration: none;
     margin-left: 10px;
 }
 
 .regist__container a {
-    color: white;
+    color: rgba(0, 0, 0, 0.863);
     text-decoration: none;
     margin-left: 10px;
 }
