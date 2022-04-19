@@ -4,7 +4,6 @@ import { motion, useMotionValue, useTransform } from 'framer-motion';
 
 const MainPage = () => {
     const x = useMotionValue(0);
-    const background = useTransform(x, [-100, 0, 100], ['#ff008c', '#7700ff', 'rgb(230, 255, 0)']);
 
     const [loginState, setLoginState] = useState(false);
     const [idInputState, setIdInputState] = useState(false);
