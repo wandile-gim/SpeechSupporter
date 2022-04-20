@@ -1,8 +1,72 @@
 import { useState, useRef } from 'react';
 import './App.css';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const url = '';
 
 const MainPage = () => {
+    const nav = useNavigate();
+    const dragDiv = useRef(null);
+    const aivleDiv = useRef(null);
+    const backDiv = useRef(null);
+    const commDiv = useRef(null);
+    const [infoText, setInfoText] = useState('Click The Card');
+    const [idValue, setIdValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
+
+    const handleLoginBtn = (event) => {
+        event.preventDefault();
+        sendLoginData();
+    };
+
+    const sendLoginData = async () => {
+        const loginData = {
+            id: idValue,
+            password: passwordValue,
+        };
+        const loginState = await axios.post(url, loginData).json();
+        console.log(loginState);
+    };
+
+    const handleMouseUp = () => {
+        aivleDiv.current.style.opacity = 0;
+        commDiv.current.style.opacity = 0;
+        backDiv.current.style.opacity = 0;
+        setInfoText('Click The Card');
+    };
+
+    const handleClick = () => {
+        aivleDiv.current.style.opacity = 0.5;
+        commDiv.current.style.opacity = 0.5;
+        backDiv.current.style.opacity = 0.5;
+        setInfoText('<= Drag The Card =>');
+    };
+
+    const handleDragEnd = (e) => {
+        const x = dragDiv.current.getBoundingClientRect().x;
+        aivleDiv.current.style.opacity = 0;
+        commDiv.current.style.opacity = 0;
+        backDiv.current.style.opacity = 0;
+        if (x <= window.screen.width * 0.3) {
+            nav('/video');
+        } else if (x >= window.screen.width * 0.3 + 200) {
+            nav('/register');
+        }
+    };
+
+    const handleDrag = () => {
+        const x = dragDiv.current.getBoundingClientRect().x;
+        if (x <= window.screen.width * 0.3) {
+            aivleDiv.current.style.opacity = 0.9;
+        } else if (x >= window.screen.width * 0.3 + 200) {
+            commDiv.current.style.opacity = 0.9;
+        } else {
+            aivleDiv.current.style.opacity = 0.5;
+            commDiv.current.style.opacity = 0.5;
+        }
+    };
     const x = useMotionValue(0);
 
     const [loginState, setLoginState] = useState(false);
@@ -15,6 +79,7 @@ const MainPage = () => {
         } else {
             setPasswordInputState(false);
         }
+        setPasswordValue(event.target.value);
     };
     const idValueChk = (event) => {
         if (event.target.value !== '') {
@@ -22,6 +87,7 @@ const MainPage = () => {
         } else {
             setIdInputState(false);
         }
+        setIdValue(event.target.value);
     };
     return (
         <>
@@ -37,7 +103,22 @@ const MainPage = () => {
             {loginState ? (
                 <>
                     <div className='container'>
-                        <motion.div className='App__rotate' drag='x' dragConstraints={{ left: 0, right: 0 }} style={{ x }}>
+                        <div className='aivle__link' ref={aivleDiv}>
+                            <h1>AIVLE로 출근하기</h1>
+                            <img src='./card-key.png' />
+                        </div>
+                        <div className='comm__link' ref={commDiv}></div>
+                        <div className='background__opacity' ref={backDiv}></div>
+                        <motion.div
+                            className='App__rotate'
+                            drag='x'
+                            dragConstraints={{ left: 0, right: 0 }}
+                            style={{ x }}
+                            ref={dragDiv}
+                            onMouseUp={handleMouseUp}
+                            onDrag={handleDrag}
+                            onDragEnd={handleDragEnd}
+                            onMouseDown={handleClick}>
                             <div className='top'></div>
                             <div className='hole'></div>
                             <div className='logo_container'>
@@ -48,6 +129,7 @@ const MainPage = () => {
                             </div>
                         </motion.div>
                     </div>
+                    <h1 className='info__text'>{infoText}</h1>
                 </>
             ) : (
                 <>
@@ -60,9 +142,9 @@ const MainPage = () => {
                             <div className='top'></div>
                             <div className='hole'></div>
                             <div className='logo_container'>
-                                <img className='logo' src='aivle.png' />
+                                <img className='logo' src='aivle.png' unselectable='on' />
                             </div>
-                            <form id='login__form'>
+                            <div id='login__form'>
                                 <div className='id__container'>
                                     <input id='id' type='text' className='id_input' onChange={idValueChk} require autoComplete='off' />
                                     <label htmlFor='id' className={idInputState ? 'id_label__focused' : 'id_label'}>
@@ -82,8 +164,8 @@ const MainPage = () => {
                                         패스워드를 입력해주세요.
                                     </label>
                                 </div>
-                                <input type='submit' value='로그인' />
-                            </form>
+                                <input type='submit' value='로그인' onClick={handleLoginBtn} />
+                            </div>
                             <div className='regist__container'>
                                 <a href=''>
                                     <span className='span'>Join Us</span>
