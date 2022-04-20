@@ -1,9 +1,3 @@
-from dataclasses import fields
-from importlib.metadata import requires
-from wsgiref import validate
-from wsgiref.validate import validator
-from argon2 import PasswordHasher
-from attr import field
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
@@ -13,9 +7,6 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from users.models import User
-from django.contrib.sites.shortcuts import get_current_site
-from django.urls import reverse
-from users.utils import Util
 from rest_framework.exceptions import AuthenticationFailed
 
 #모델 호출
