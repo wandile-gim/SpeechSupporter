@@ -57,11 +57,11 @@ body {
     font-size: 24px;
     margin-top: -100px;
     margin-bottom: 60px;
-    padding-right: 80px;
+    padding-right: 70px;
 }
 
 .aivle__link img {
-    width: 350px;
+    width: 26vw;
     height: 300px;
     padding-left: 50px;
     pointer-events: none;

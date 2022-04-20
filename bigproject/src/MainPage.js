@@ -21,12 +21,13 @@ const MainPage = () => {
         sendLoginData();
     };
 
-    const sendLoginData = () => {
+    const sendLoginData = async () => {
         const loginData = {
             id: idValue,
             password: passwordValue,
         };
-        axios.post(url, loginData);
+        const loginState = await axios.post(url, loginData).json();
+        console.log(loginState);
     };
 
     const handleMouseUp = () => {
@@ -48,18 +49,18 @@ const MainPage = () => {
         aivleDiv.current.style.opacity = 0;
         commDiv.current.style.opacity = 0;
         backDiv.current.style.opacity = 0;
-        if (x <= 432) {
-            nav('/register');
-        } else if (x >= 600) {
+        if (x <= window.screen.width * 0.3) {
             nav('/video');
+        } else if (x >= window.screen.width * 0.3 + 200) {
+            nav('/register');
         }
     };
 
     const handleDrag = () => {
         const x = dragDiv.current.getBoundingClientRect().x;
-        if (x <= 432) {
+        if (x <= window.screen.width * 0.3) {
             aivleDiv.current.style.opacity = 0.9;
-        } else if (x >= 600) {
+        } else if (x >= window.screen.width * 0.3 + 200) {
             commDiv.current.style.opacity = 0.9;
         } else {
             aivleDiv.current.style.opacity = 0.5;
