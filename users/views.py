@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, UpdateAPIView
+from rest_framework.generics import GenericAPIView, UpdateAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 #drf permission
@@ -14,7 +14,7 @@ from rest_framework import status
 
 from users.models import User
 
-from users.serializers import UserLoginSerializer, UserRegisterSerializer, UserSerializer, ChangePasswordSerializer, ResetPasswordSerializer, SetPasswordSerializer
+from users.serializers import *
 import jwt, datetime
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator 
@@ -53,6 +53,7 @@ class RegisterView(GenericAPIView):
 class LoginView(GenericAPIView):
     serializer_class = UserLoginSerializer
     def post(self, request, *args, **kwargs): 
+        
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             return Response(status=status.HTTP_409_CONFLICT, data = {'message':'check Email and Password'})
@@ -66,9 +67,12 @@ class LoginView(GenericAPIView):
         response = Response()
         #프론트엔드에 보여지는 것을 막고, 백엔드에서만 사용하기 위해 토큰을 쿠키에 저장
         response.set_cookie(key='jwt', value=user['token'], httponly=True)
+
         response.data = {
             "email" : UserLoginSerializer(user,context=self.get_serializer_context()).data.get('email'),
-            'message' : "token successfully created"
+            'message' : "token successfully created",
+            'token' : user['token'],
+            'login-status' : True
         }
         return response
         # email = request.data['email']
@@ -100,7 +104,7 @@ JWT_DECODE_HANDLER = api_settings.JWT_DECODE_HANDLER
 class UserView(APIView):
     def get(self, request):
         loggedin = False
-        token = request.COOKIES.get('jwt')
+        token = request.headers.get('AUTHORIZATION')
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
         try:
@@ -108,7 +112,7 @@ class UserView(APIView):
             payload = JWT_DECODE_HANDLER(token)
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
-
+        print(request.user)
         user = User.objects.filter(email = payload['email']).first()
         serializer = UserSerializer(user)
         if request.user.is_authenticated:
@@ -131,6 +135,32 @@ class LogoutView(APIView):
         }
         return response
 
+
+@permission_classes([IsAuthenticated])
+class UpdatePartialUserView(RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            serializer_class = UserSerializer
+        if self.request.method == 'PUT':
+            serializer_class = UserProfileSerializer
+        return serializer_class
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(status=status.HTTP_200_OK, data = serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data = request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        
+        return Response(status=status.HTTP_202_ACCEPTED, data={"message": "success!"})
+        
 @permission_classes([IsAuthenticated])
 class ChangePasswordView(UpdateAPIView):
     serializer_class = ChangePasswordSerializer

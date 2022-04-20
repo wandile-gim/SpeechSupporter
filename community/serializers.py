@@ -19,15 +19,12 @@ class PostCreateSerializer(serializers.ModelSerializer):
         fields = ['title', 'content','user','category', 'tags', 'image']
     
 class PostListSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source = 'user.nick_name')
     category = serializers.ReadOnlyField(source = 'category.name')
     class Meta:
         model = Post 
         fields = ['id', 'user', 'title', 'category','content', 'create_dt', 'like', 'view_count']
 
-class PostSerializerSub(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ['id', 'title']
 
 class CommentSerializerSub(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source = 'author.nick_name')
@@ -44,6 +41,11 @@ class PostRetrieveSerializer(serializers.ModelSerializer):
         model = Post
         exclude = ['create_dt']
 
+class PostSerializerSub(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'title']
+            
 class PostDetailSerializer(serializers.Serializer):
     post = PostRetrieveSerializer()
     prevPost = PostSerializerSub()

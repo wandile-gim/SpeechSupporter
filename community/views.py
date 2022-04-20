@@ -79,6 +79,7 @@ class PostCreateAPIView(CreateAPIView):
 
 #         if serializer.errors:
 #             print(serializer.errors)
+@permission_classes([IsAuthenticated])
 class CommentCreateAPIView(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -126,6 +127,7 @@ class PostRetreiveAPIView(RetrieveAPIView):
 
 
 # class PostLikeAPIView(UpdateAPIView):
+permission_classes([IsAuthenticated])
 class PostLikeAPIView(GenericAPIView):
     queryset = Post.objects.all()
     #GET으로 처리함으로써 serializer는 삭제해도 됨.

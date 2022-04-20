@@ -1,3 +1,4 @@
+from dataclasses import fields
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
@@ -70,7 +71,29 @@ class UserLoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'nick_name', 'wannabe', 'image_field']
+        fields = ['email', 'nick_name', 'wannabe', 'profile_img']
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
+    old_password = serializers.CharField(write_only=True, required=True)
+    profile_img = serializers.ImageField(use_url=True, required = False)
+
+    def validate_old_password(self, value):
+        #check user
+        request = self.context.get('request')
+        if request and hasattr(request, "user"):
+            user = request.user
+
+        if not user.check_password(value):
+            raise serializers.ValidationError({
+                "old_password" : "Old password is not correct"
+            })
+        return value
+
+    class Meta:
+        model = User
+        fields = ['nick_name', 'wannabe', 'password', 'password2' 'profile_img']
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
