@@ -20,7 +20,7 @@ const Register = () => {
 
     const sendLoginData = async () => {
         const loginData = {
-            id: idValue,
+            nick_name: idValue,
             password: passwordValue,
             email: emailValue,
             wannabe: companyValue,

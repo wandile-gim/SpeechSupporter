@@ -2,9 +2,10 @@ import { useState } from 'react';
 import './LoginPage.module.css';
 import axios from 'axios';
 
-const url = '';
+const url = 'http://localhost:8000/api/users/login/';
 
 const LoginPage = () => {
+    
     const [loginState, setLoginState] = useState(false);
     const [idInputState, setIdInputState] = useState(false);
     const [passwordInputState, setPasswordInputState] = useState(false);
@@ -18,11 +19,12 @@ const LoginPage = () => {
 
     const sendLoginData = async () => {
         const loginData = {
-            id: idValue,
+            email: idValue,
             password: passwordValue,
         };
         const loginState = await axios.post(url, loginData).json();
         console.log(loginState);
+        nav('/video');
     };
 
     const passwordValueChk = (event) => {
