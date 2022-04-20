@@ -79,6 +79,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
     old_password = serializers.CharField(write_only=True, required=True)
     profile_img = serializers.ImageField(use_url=True, required = False)
 
+    def validate(self, attrs):
+        if attrs.get('password') != attrs.get('password2'):
+            raise serializers.ValidationError({
+                "password" : "Password field are not pair"})
+        return attrs
+
     def validate_old_password(self, value):
         #check user
         request = self.context.get('request')
@@ -93,7 +99,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['nick_name', 'wannabe', 'password', 'password2' 'profile_img']
+        fields = ['nick_name', 'wannabe', 'old_password', 'password', 'password2', 'profile_img']
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)

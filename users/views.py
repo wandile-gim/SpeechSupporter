@@ -104,7 +104,7 @@ JWT_DECODE_HANDLER = api_settings.JWT_DECODE_HANDLER
 class UserView(APIView):
     def get(self, request):
         loggedin = False
-        token = request.headers.get('AUTHORIZATION')
+        token = request.COOKIES.get('jwt')
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
         try:
@@ -112,7 +112,7 @@ class UserView(APIView):
             payload = JWT_DECODE_HANDLER(token)
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
-        print(request.user)
+
         user = User.objects.filter(email = payload['email']).first()
         serializer = UserSerializer(user)
         if request.user.is_authenticated:
@@ -139,26 +139,29 @@ class LogoutView(APIView):
 @permission_classes([IsAuthenticated])
 class UpdatePartialUserView(RetrieveUpdateAPIView):
     queryset = User.objects.all()
+    serializer_class = UserProfileSerializer
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
 
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            serializer_class = UserSerializer
-        if self.request.method == 'PUT':
-            serializer_class = UserProfileSerializer
-        return serializer_class
+        obj = queryset.get(pk=self.request.user.id)
+        self.check_object_permissions(self.request, obj)
+        return obj
     
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
+        serializer = UserSerializer(request.user)
         return Response(status=status.HTTP_200_OK, data = serializer.data)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data = request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+        self.object = self.get_object()
+        serializer = self.get_serializer(request.user, data = request.data, partial=partial)
+        # serializer = self.get_serializer(self.object, data = request.data, partial=partial)
+        if not serializer.is_valid(raise_exception=True):
+            return Response(status=status.HTTP_409_CONFLICT, data = {'message':serializer.errors})
         
+        self.object.set_password(request.data['password'])
+        self.object.save()
+
         return Response(status=status.HTTP_202_ACCEPTED, data={"message": "success!"})
         
 @permission_classes([IsAuthenticated])
