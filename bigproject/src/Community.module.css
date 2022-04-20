@@ -60,7 +60,7 @@ body {
 
 .menu {
   width: 65vw;
-  height: 12vh;
+  height: 7vh;
   display: flex;
   justify-content: left;
   align-items: center;
@@ -93,17 +93,57 @@ body {
   color: black;
 }
 
+.post_title {
+  width: 65vw;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  font-family: "GmarketSansMedium";
+  font-size: 15px;
+  border-bottom: 2px;
+  border-color: rgb(200, 200, 200);
+  border-style: solid;
+}
+
+.post_title #number {
+  width: 100px;
+}
+
+.post_title #title {
+  width: 700px;
+  margin-left: 5px;
+}
+
+.post_title #user_id {
+  width: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.post_title #date {
+  margin-left: 20px;
+  margin-right: 25px;
+}
+
+.post_title #like {
+  margin-right: 10px;
+}
+
+.post_title #view {
+  margin-left: 5px;
+}
+
 .post {
   width: 65vw;
   height: 65vh;
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: start;
 }
 
 .post_num {
   width: 65vw;
-  height: 4vh;
+  height: 5vh;
   display: flex;
   align-items: center;
   font-family: "GmarketSansMedium";
@@ -132,8 +172,7 @@ body {
 }
 
 .post_num #title a:hover {
-  text-decoration: underline;
-  color: black;
+  color: rgb(150, 150, 150);
 }
 
 .post_num #user_id {
@@ -144,7 +183,7 @@ body {
 }
 
 .post_num #date {
-  font-size: 15px;
+  font-size: 10px;
   margin-left: 20px;
   margin-right: 25px;
 }
@@ -211,9 +250,22 @@ body {
 }
 
 .page {
-  width: 400px;
+  width: 700px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.search {
+  width: 300px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search input {
+  width: 200px;
+  height: 20px;
 }
