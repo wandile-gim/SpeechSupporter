@@ -105,7 +105,7 @@ const MainPage = () => {
                     <div className='container'>
                         <div className='aivle__link' ref={aivleDiv}>
                             <h1>AIVLE로 출근하기</h1>
-                            <img src='./card-key (1).png' />
+                            <img src='./card-key.png' />
                         </div>
                         <div className='comm__link' ref={commDiv}></div>
                         <div className='background__opacity' ref={backDiv}></div>
