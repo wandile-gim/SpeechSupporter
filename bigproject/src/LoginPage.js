@@ -5,7 +5,6 @@ import axios from 'axios';
 const url = 'http://localhost:8000/api/users/login/';
 
 const LoginPage = () => {
-    
     const [loginState, setLoginState] = useState(false);
     const [idInputState, setIdInputState] = useState(false);
     const [passwordInputState, setPasswordInputState] = useState(false);
@@ -22,9 +21,8 @@ const LoginPage = () => {
             email: idValue,
             password: passwordValue,
         };
-        const loginState = await axios.post(url, loginData).json();
+        const loginState = await axios.post(url, loginData);
         console.log(loginState);
-        nav('/video');
     };
 
     const passwordValueChk = (event) => {
