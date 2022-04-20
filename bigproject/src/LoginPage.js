@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {useNavigate} from "react-router-dom"
 import './LoginPage.module.css';
 import axios from 'axios';
 
@@ -11,6 +12,9 @@ const LoginPage = () => {
     const [passwordInputState, setPasswordInputState] = useState(false);
     const [idValue, setIdValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
+    const [token, setToken] = useState("");
+
+    const nav = useNavigate();
 
     const handleLoginBtn = (event) => {
         event.preventDefault();
@@ -22,9 +26,11 @@ const LoginPage = () => {
             email: idValue,
             password: passwordValue,
         };
-        const loginState = await axios.post(url, loginData).json();
-        console.log(loginState);
-        nav('/video');
+        const loginState = await axios.post(url, loginData);
+        setToken(loginState.data.token)
+        if (loginState.data["login-status"]) {
+            nav("/main", {state : {token : loginState.data.token}})
+        }
     };
 
     const passwordValueChk = (event) => {

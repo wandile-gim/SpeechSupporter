@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
 import { motion, useMotionValue } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000/api/users/user/';
@@ -15,8 +15,16 @@ const MainPage = () => {
     const [infoText, setInfoText] = useState('Click The Card');
     const [userData, setUserData] = useState([]);
 
+    const token = useLocation().state;
     const getUserData = async () => {
-        const data = await axios.get(BASE_URL).json();
+        const headers = {
+            headers :{
+                'Content-Type': 'application/json',
+                Authorization : `jwt ${token.token}` 
+            }
+        }
+        console.log(headers)
+        const data = await axios.get(BASE_URL, headers);
         console.log(data);
     };
 
