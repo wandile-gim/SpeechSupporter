@@ -1,6 +1,7 @@
+import { useState, useEffect } from "react";
 import styles from "./Community.module.css";
 
-const data = [
+const dat = [
   {
     id: 15,
     user: "김원재",
@@ -152,10 +153,40 @@ const data = [
     view_count: 13,
   },
 ];
-const pagecnt = 10;
-const curpage = 1;
 
 const Community = () => {
+  const [data, setData] = useState([]);
+  const [pagelist, setPagelist] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [totpage, setTotpage] = useState(34);
+  const [curpage, setCurpage] = useState(1);
+  let p = [];
+
+  const right_btn = () => {
+    for (let i = 0; i < 10; i++) {
+      p[i] = pagelist[i] + 10;
+    }
+    console.log(p);
+    setPagelist(p);
+  };
+
+  const left_btn = () => {
+    for (let i = 0; i < 10; i++) {
+      p[i] = pagelist[i] - 10;
+    }
+    console.log(p);
+    setPagelist(p);
+  };
+
+  const pagenate = () => {
+    pagelist.map((num) => {
+      return <a href="">{num}</a>;
+    });
+  };
+
+  useEffect(() => {
+    setData(dat);
+  }, []);
+
   return (
     <div className={styles.container}>
       <img src="aivle.png" className={styles.logo} />
@@ -211,7 +242,11 @@ const Community = () => {
           </a>
         </div>
         <div className={styles.page}>
-          <navi>1 2 3 4 5 6 7 8 9 10</navi>
+          <button onClick={left_btn}>◀</button>
+          {pagelist.map((num) => {
+            return <a href="">{num}</a>;
+          })}
+          <button onClick={right_btn}>▶</button>
         </div>
         <div className={styles.search}>
           <input placeholder="검색" />
