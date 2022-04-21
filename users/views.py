@@ -32,6 +32,7 @@ from users.utils import Util
 #             get_user_model().objects.create_user(**seriallizer.validated_data)
 #             return Response(status= status.HTTP_201_CREATED)    
 #         return Response(status= status.HTTP_400_BAD_REQUEST, data={'errors': seriallizer.errors})
+
 @permission_classes([AllowAny])
 class RegisterView(GenericAPIView):
     """
@@ -113,7 +114,7 @@ class UserView(APIView):
     """
     def get(self, request):
         loggedin = False
-        token = request.COOKIES.get('jwt')
+        token = request.headers.get('Authorization')
         # token = request.header.
         # token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMywidXNlcm5hbWUiOiJkbmpzd28xMjM0QG5hdmVyLmNvbSIsImV4cCI6MTY1MDQ3MjQ3NSwiZW1haWwiOiJkbmpzd28xMjM0QG5hdmVyLmNvbSIsIm9yaWdfaWF0IjoxNjUwNDY4ODc1fQ.v90ueJHFDDwxq2ypo3hVV5Q2I1mvfp2bjJrQDSqAxT8'
         # token = token.split('jwt')[1].lstrip()
@@ -126,12 +127,12 @@ class UserView(APIView):
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
 
-        user = User.objects.filter(email = payload['email']).first()
+        user = User.objects.filter(email = payload['user_email']).first()
         serializer = UserSerializer(user)
         
         if user.is_authenticated:
             loggedin = True
-        context ={
+        context = {
             'user' :serializer.data,
             'login' : loggedin
         }
@@ -148,7 +149,6 @@ class LogoutView(APIView):
             'message' : 'success'
         }
         return response
-
 
 @permission_classes([IsAuthenticated])
 class UpdatePartialUserView(RetrieveUpdateAPIView):
@@ -178,6 +178,7 @@ class UpdatePartialUserView(RetrieveUpdateAPIView):
         
         self.perform_update(serializer=serializer)
         self.object.set_password(request.data['password'])
+        self.object.save()
 
         return Response(status=status.HTTP_202_ACCEPTED, data={"message": "success!"})
 
