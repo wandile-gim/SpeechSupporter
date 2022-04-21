@@ -1,10 +1,27 @@
 import * as posenet from '@tensorflow-models/posenet';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Cookies } from 'react-cookie';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Webcam from 'react-webcam';
 import styles from './Aivle.module.css';
-import { drawKeypoints, drawSkeleton } from './Utilites';
+import { drawKeypoints, drawSkeleton } from '../Utilites';
 
 const Aivle = () => {
+    const cookies = new Cookies();
+
+    const nav = useNavigate();
+    const location = useLocation();
+
+    const setCookie = (name, value) => {
+        return cookies.set(name, value);
+    };
+
+    const userChk = () => {
+        if (!location.state) {
+            nav('/login');
+        }
+    };
+
     const [keypoints, setKeypoints] = useState([]);
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
@@ -43,6 +60,10 @@ const Aivle = () => {
         drawKeypoints(pose['keypoints'], 0.6, ctx);
         drawSkeleton(pose['keypoints'], 0.7, ctx);
     };
+
+    useEffect(() => {
+        userChk();
+    }, []);
     return (
         <div className='container'>
             <img className={styles.logo} src='aivle.png' />

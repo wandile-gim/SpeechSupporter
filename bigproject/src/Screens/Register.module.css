@@ -1,0 +1,239 @@
+@keyframes setOpacity {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
+@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: rgb(248, 250, 252);
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(248, 250, 252);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.employee__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.logo_container {
+    width: 140px;
+    height: 63px;
+}
+
+.neckless__container {
+    display: flex;
+    margin-top: -10vw;
+}
+
+.neckless_front {
+    margin-right: 20px;
+    width: 30px;
+    height: 170px;
+    background-color: #0a2b3a;
+    border-bottom-left-radius: 14px;
+    transform: rotate(-25deg);
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+    z-index: 10;
+}
+
+.neckless_back {
+    width: 30px;
+    height: 170px;
+    margin-left: 35px;
+    background-color: #0a2b3a;
+    transform: rotate(30deg);
+    border-bottom-right-radius: 100px;
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+}
+
+.App__rotate {
+    border-radius: 20px;
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
+    width: 400px;
+    height: 630px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotateY(0deg);
+    box-shadow: 0 0 10px 5px rgb(225, 225, 226);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    margin-top: -35px;
+}
+
+.top {
+    width: inherit;
+    border-radius: inherit;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    height: 80px;
+    border: none;
+    box-shadow: 0 0 10px 0 rgb(225, 225, 226);
+    background-color: #4876ef;
+}
+
+.hole {
+    position: absolute;
+    background-color: rgb(248, 250, 252);
+    opacity: 0.6;
+    width: 70px;
+    height: 1.5vh;
+    border: none;
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: 8;
+}
+
+.img__container {
+    margin-top: 40px;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.img__container img {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+}
+
+.employee__card__text__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.input__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+    height: 630px;
+    color: rgba(0, 0, 0, 0.863);
+    background-color: rgb(234, 237, 244);
+}
+
+.input__container h1 {
+    font-family: GmarketSansMedium;
+    color: rgba(0, 0, 0, 0.863);
+    font-size: 22px;
+    margin-top: 15px;
+}
+
+.upload__img__container {
+    width: 130px;
+    height: 130px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.upload__img__container img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+
+.employee__card__text__container {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.employee__card__text__container span:first-child {
+    font-family: GmarketSansMedium;
+    font-size: 18px;
+    margin-top: 30px;
+    padding-left: 55px;
+    margin-bottom: 40px;
+}
+
+.employee__card__text__container span:nth-child(2) {
+    font-family: GmarketSansMedium;
+    font-size: 18px;
+    margin-bottom: 80px;
+    padding-left: 55px;
+}
+
+.employee__card__text__container span:last-child {
+    font-family: GmarketSansMedium;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.upload__img__container label {
+    position: absolute;
+    cursor: pointer;
+}
+
+.upload__img__container input {
+    z-index: 100;
+}
+
+.form__container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.form__container form label {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: auto;
+    font-family: GmarketSansMedium;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.863);
+}
+
+.form__container form input {
+    box-sizing: border-box;
+    width: 250px;
+    height: 35px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    margin-top: 10px;
+    text-align: left;
+    padding-inline-start: 30px;
+    font-family: GmarketSansMedium;
+}
+
+.form__container form input:last-child {
+    width: 150px;
+    height: 35px;
+    text-align: center;
+    padding-inline-start: 0px;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: rgb(215, 217, 221);
+}

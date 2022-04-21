@@ -1,4 +1,4 @@
-from dataclasses import fields
+import email
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import update_last_login
@@ -13,11 +13,11 @@ from rest_framework.exceptions import AuthenticationFailed
 #모델 호출
 User = get_user_model()
 class UserRegisterSerializer(serializers.ModelSerializer):
-    profile_img = serializers.ImageField(use_url=True, required = False)
+    #profile_img = serializers.ImageField(use_url=True, required = False)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'nick_name', 'wannabe', 'profile_img']
+        fields = ['email', 'password', 'nick_name', 'wannabe', ]# , 'profile_img'
         #Body에 시리얼라이즈 결과로 나오지 않음
         extra_kwargs = {
             'password' : {'write_only' : True}
@@ -71,7 +71,7 @@ class UserLoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'nick_name', 'wannabe', 'profile_img']
+        fields = ['email', 'nick_name', 'wannabe', ]#'profile_img'
 
 class UserProfileSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
@@ -135,34 +135,22 @@ class ResetPasswordSerializer(serializers.Serializer):
 
 class SetPasswordSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)
-    password2 = serializers.CharField(write_only=True, required=True)
-    token = serializers.CharField(write_only=True, required=True)
-    uidb64 = serializers.CharField(write_only=True, required=True)
+    email = serializers.CharField(write_only=True, required=True)
+
 
     class Meta:
-        fields = ['password', 'password2', 'token', 'uidb64']
+        fields = ['password', "email"]
     
     def validate(self, attrs):
-        try:
+        
             password = attrs.get('password')
-            password2 = attrs.get('password2')
-            token = attrs.get('token')
-            uidb64 = attrs.get('uidb64')
+           
 
-            id = force_str(urlsafe_base64_decode(uidb64)) # uidb64에 id가 담겨져있다.
-            user = User.objects.get(id = id)
-
-            if not PasswordResetTokenGenerator().check_token(user, token): # 토큰이 만료되거나 인가되지 않는 사용자 제거
-                raise AuthenticationFailed('The Reset Link is not valid, Plz try again new request', 401)
-            
-            if password != password2:
-                raise serializers.ValidationError({
-                    "password" : "Password field are not pair"})
+            user = User.objects.get(email = attrs.get("email"))
 
             user.set_password(password) # 비밀번호 저장
             user.save()
             
             return user
 
-        except Exception as e:
-            raise AuthenticationFailed('The Reset Link is not valid, Plz try again new request', 401)
+    
