@@ -36,7 +36,7 @@ class UserLoginSerializer(serializers.Serializer):
         password = data.get("password", None)
         # 사용자 아이디와 비밀번호로 로그인 구현(<-> 사용자 아이디 대신 이메일로도 가능)
         user = authenticate(email=email, password=password)
-
+        
         if user is None:
             user = User.objects.filter(email=email).first()
             if user is None :
@@ -53,7 +53,7 @@ class UserLoginSerializer(serializers.Serializer):
 
         except User.DoesNotExist:
             raise serializers.ValidationError(
-                'User with given username and password does not exist'
+                '해당 유저 정보가 존재하지 않습니다.'
             )
         return {
             'email':user.email,
@@ -79,6 +79,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
     old_password = serializers.CharField(write_only=True, required=True)
     profile_img = serializers.ImageField(use_url=True, required = False)
 
+    def validate(self, attrs):
+        if attrs.get('password') != attrs.get('password2'):
+            raise serializers.ValidationError({
+                "password" : "비밀번호가 다릅니다."})
+        return attrs
+
     def validate_old_password(self, value):
         #check user
         request = self.context.get('request')
@@ -87,13 +93,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
         if not user.check_password(value):
             raise serializers.ValidationError({
-                "old_password" : "Old password is not correct"
+                "old_password" : "기존 비밀번호가 틀립니다."
             })
         return value
 
     class Meta:
         model = User
-        fields = ['nick_name', 'wannabe', 'password', 'password2' 'profile_img']
+        fields = ['nick_name', 'wannabe', 'old_password', 'password', 'password2', 'profile_img']
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
@@ -126,7 +132,6 @@ class ResetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=255)
     class Meta:
         fields = ['email']
-
 
 class SetPasswordSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True, required=True)

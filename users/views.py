@@ -34,10 +34,13 @@ from users.utils import Util
 #         return Response(status= status.HTTP_400_BAD_REQUEST, data={'errors': seriallizer.errors})
 @permission_classes([AllowAny])
 class RegisterView(GenericAPIView):
+    """
+    회원가입을 수행합니다.
+    """
     serializer_class = UserRegisterSerializer
     def post(self, request):
+        #request에서 받은 데이터를 serializer_class 직렬화하고 유효성검사를 통과하면 유저매니저의 create_user를 호출해 유저 정보 생성
         seriallizer = self.get_serializer(data=request.data)
-        #serializer (create) 메소드로 저장된 정보를 검사
         if seriallizer.is_valid(raise_exception=True):
             get_user_model().objects.create_user(**seriallizer.validated_data)
             return Response(status= status.HTTP_201_CREATED, data={'message': "user info has been created"})    
@@ -51,17 +54,20 @@ class RegisterView(GenericAPIView):
 
 @permission_classes([AllowAny])
 class LoginView(GenericAPIView):
+    """
+    로그인을 수행합니다.
+    """
     serializer_class = UserLoginSerializer
     def post(self, request, *args, **kwargs): 
-        
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
-            return Response(status=status.HTTP_409_CONFLICT, data = {'message':'check Email and Password'})
+            return Response(status=status.HTTP_409_CONFLICT, data = {'message':'check Email and Password',
+            'message' : serializer.errors})
         
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        if user['email'] == "None":
-            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message':"fail(email)"})
+        # if user['email'] == "None":
+        #     return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message':"fail(email)"})
         
         #Customizing Response 
         response = Response()
@@ -102,9 +108,16 @@ class LoginView(GenericAPIView):
         # return response
 JWT_DECODE_HANDLER = api_settings.JWT_DECODE_HANDLER
 class UserView(APIView):
+    """
+    로그인된 유저정보를 반환합니다.
+    """
     def get(self, request):
         loggedin = False
-        token = request.headers.get('AUTHORIZATION')
+        token = request.COOKIES.get('jwt')
+        # token = request.header.
+        # token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMywidXNlcm5hbWUiOiJkbmpzd28xMjM0QG5hdmVyLmNvbSIsImV4cCI6MTY1MDQ3MjQ3NSwiZW1haWwiOiJkbmpzd28xMjM0QG5hdmVyLmNvbSIsIm9yaWdfaWF0IjoxNjUwNDY4ODc1fQ.v90ueJHFDDwxq2ypo3hVV5Q2I1mvfp2bjJrQDSqAxT8'
+        # token = token.split('jwt')[1].lstrip()
+        print(token)
         if not token:
             raise AuthenticationFailed('Unauthenticated!')
         try:
@@ -112,10 +125,11 @@ class UserView(APIView):
             payload = JWT_DECODE_HANDLER(token)
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Unauthenticated!')
-        print(request.user)
+
         user = User.objects.filter(email = payload['email']).first()
         serializer = UserSerializer(user)
-        if request.user.is_authenticated:
+        
+        if user.is_authenticated:
             loggedin = True
         context ={
             'user' :serializer.data,
@@ -138,29 +152,36 @@ class LogoutView(APIView):
 
 @permission_classes([IsAuthenticated])
 class UpdatePartialUserView(RetrieveUpdateAPIView):
+    """
+    유저 정보를 수정합니다. 기본 유저 필드는 조회되어 필드에 표현되고 부가 유저 필드를 포함하여 수정할 수 있습니다.
+    """
     queryset = User.objects.all()
+    serializer_class = UserProfileSerializer
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
 
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            serializer_class = UserSerializer
-        if self.request.method == 'PUT':
-            serializer_class = UserProfileSerializer
-        return serializer_class
+        obj = queryset.get(pk=self.request.user.id)
+        self.check_object_permissions(self.request, obj)
+        return obj
     
     def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
+        serializer = UserSerializer(request.user)
         return Response(status=status.HTTP_200_OK, data = serializer.data)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data = request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+        self.object = self.get_object()
+        serializer = self.get_serializer(request.user, data = request.data, partial=partial)
+        # serializer = self.get_serializer(self.object, data = request.data, partial=partial)
+        if not serializer.is_valid(raise_exception=True):
+            return Response(status=status.HTTP_409_CONFLICT, data = {'message':serializer.errors})
         
+        self.perform_update(serializer=serializer)
+        self.object.set_password(request.data['password'])
+
         return Response(status=status.HTTP_202_ACCEPTED, data={"message": "success!"})
-        
+
+#UpdatePartialUserView 구현으로인해 단독으로 사용하지 않음. 
 @permission_classes([IsAuthenticated])
 class ChangePasswordView(UpdateAPIView):
     serializer_class = ChangePasswordSerializer
