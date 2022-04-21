@@ -1,6 +1,8 @@
+from asyncio import constants
 from django.contrib.auth import get_user_model
 
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser
 from rest_framework.generics import GenericAPIView, UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
@@ -32,15 +34,18 @@ from users.utils import Util
 #             get_user_model().objects.create_user(**seriallizer.validated_data)
 #             return Response(status= status.HTTP_201_CREATED)    
 #         return Response(status= status.HTTP_400_BAD_REQUEST, data={'errors': seriallizer.errors})
+
 @permission_classes([AllowAny])
 class RegisterView(GenericAPIView):
     serializer_class = UserRegisterSerializer
+
     def post(self, request):
         seriallizer = self.get_serializer(data=request.data)
         #serializer (create) 메소드로 저장된 정보를 검사
         if seriallizer.is_valid(raise_exception=True):
             get_user_model().objects.create_user(**seriallizer.validated_data)
-            return Response(status= status.HTTP_201_CREATED, data={'message': "user info has been created"})    
+            return Response(status= status.HTTP_201_CREATED, data={'message': "user info has been created",
+                                                                    "state" : True    })    
         return Response(status= status.HTTP_400_BAD_REQUEST, data={'errors': seriallizer.errors})
 
         # 아래는 serializer를 통해 구현한 사용자 생성 로직
@@ -55,12 +60,12 @@ class LoginView(GenericAPIView):
     def post(self, request, *args, **kwargs): 
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
-            return Response(status=status.HTTP_409_CONFLICT, data = {'message':'check Email and Password'})
+            return Response( data = {'message' : serializer.errors})
         
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        if user['email'] == "None":
-            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message':"fail(email)"})
+        #if user['email'] == "None":
+         #   return Response( data={'message':"fail(email)", "id" : 20})
         
         #Customizing Response 
         response = Response()
@@ -68,7 +73,9 @@ class LoginView(GenericAPIView):
         response.set_cookie(key='jwt', value=user['token'], httponly=True)
         response.data = {
             "email" : UserLoginSerializer(user,context=self.get_serializer_context()).data.get('email'),
-            'message' : "token successfully created"
+            'message' : "token successfully created",
+            'token' : user['token'],
+            'login-status' : True
         }
         return response
         # email = request.data['email']
@@ -111,7 +118,8 @@ class UserView(APIView):
 
         user = User.objects.filter(email = payload['email']).first()
         serializer = UserSerializer(user)
-        if request.user.is_authenticated:
+        
+        if user.is_authenticated:
             loggedin = True
         context ={
             'user' :serializer.data,
@@ -156,6 +164,7 @@ class Test(GenericAPIView):
     def get(self, request, *args, **kwargs):
         return Response({'message':'good'}, status=status.HTTP_200_OK)
 
+@permission_classes([AllowAny])
 class ResetPasswordView(GenericAPIView): # 패스워드 초기화 1  - 이메일로 토큰, userID이 담긴 링크 전송 -> 이메일 필요
     serializer = ResetPasswordSerializer
 
@@ -173,8 +182,8 @@ class ResetPasswordView(GenericAPIView): # 패스워드 초기화 1  - 이메일
             current_site = get_current_site(request = request).domain 
             relativeLink = reverse(
                 'users:reset_confirm', kwargs={'uidb64' : uidb64, 'token' : token })
-            absurl = 'http://' + current_site + relativeLink # 비밀 번호 변경 토큰 URL 링크 생성
-            email_body = 'Hi, ' + user.nick_name + '\n Thank you for Using Speech Supporter \n\n Use Link below to reset your password \n\n' + absurl
+            absurl = token # 비밀 번호 변경 토큰 URL 링크 생성
+            email_body = 'Hi, ' + user.nick_name + '\n ' + token
             
             data = {'email_body' : email_body, 'to_email' : user.email, # 전송 이메일 내용
                     'email_subject' : '[Team. AIVLE] Reset your Password'}
@@ -187,8 +196,9 @@ class ResetPasswordView(GenericAPIView): # 패스워드 초기화 1  - 이메일
         serializer.is_valid(raise_exception=True)        
 
         # 이메일로 링크만 전송(링크에 토큰과 userID 포함)
-        return Response({'message' : 'You can reset your password checking your email'}, status = status.HTTP_200_OK) 
+        return Response({'message' : 'You can reset your password checking your email', "send_state" : True}, status = status.HTTP_200_OK) 
 
+@permission_classes([AllowAny])
 class CheckPasswordToken(GenericAPIView): # 패스워드 초기화 2- 이메일 URL 클릭 시
     def get(self, request, uidb64, token):
         try:
@@ -205,6 +215,7 @@ class CheckPasswordToken(GenericAPIView): # 패스워드 초기화 2- 이메일 
             if not PasswordResetTokenGenerator().check_token(user):
                 return Response({"message" : "The Reset Link is not valid, Plz try again new request"}, status=status.HTTP_401_UNAUTHORIZED)
 
+@permission_classes([AllowAny])
 class SetPasswordView(UpdateAPIView): # 패스워드 초기화 3 - 토큰 확인 후 비밀번호 변경 -> 비밀번호1, 비밀번호2, 토큰, userID 필요
     serializer_class = SetPasswordSerializer
     
@@ -212,4 +223,4 @@ class SetPasswordView(UpdateAPIView): # 패스워드 초기화 3 - 토큰 확인
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        return Response({"message" : "Password Rest Success!!"}, status=status.HTTP_200_OK)
+        return Response({"message" : "Password Rest Success!!", "success" : True}, status=status.HTTP_200_OK)
