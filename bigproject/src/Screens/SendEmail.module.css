@@ -1,0 +1,144 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.neckless__container {
+    display: flex;
+    justify-content: center;
+    margin-top: -20vw;
+}
+
+.neckless_front {
+    margin-right: 55px;
+    width: 30px;
+    height: 250px;
+    background-color: #0a2b3a;
+    border-bottom-left-radius: 14px;
+    transform: rotate(-25deg);
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+    z-index: 10;
+}
+
+.neckless_back {
+    width: 30px;
+    height: 250px;
+    margin-left: 35px;
+    background-color: #0a2b3a;
+    transform: rotate(30deg);
+    border-bottom-right-radius: 100px;
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+}
+
+.main__design__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -40px;
+    width: 550px;
+    height: 350px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px 5px rgb(225, 225, 226);
+    background-color: white;
+    z-index: 1;
+}
+
+.top {
+    width: inherit;
+    height: 50px;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    background-color: #4876ef;
+}
+
+.hole {
+    position: absolute;
+    background-color: rgb(248, 250, 252);
+    opacity: 0.6;
+    width: 70px;
+    height: 1.5vh;
+    border: none;
+    box-shadow: 0 0 3px 0.5px rgb(225, 225, 226);
+    border-radius: 20px;
+    margin-top: 20px;
+    z-index: 8;
+}
+
+.logo_container {
+    width: 140px;
+    height: 63px;
+}
+
+.logo_container img {
+    pointer-events: none;
+}
+
+.input__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.input__container input {
+    margin-top: 10px;
+    width: 300px;
+    border: none;
+    border-radius: 15px;
+    height: 50px;
+    box-shadow: 0 0 5px 1px rgb(225, 225, 226);
+    box-sizing: border-box;
+    outline: none;
+    color: rgba(0, 0, 0, 0.863);
+}
+
+.id__input {
+    padding-left: 21px;
+    padding-top: 20px;
+}
+
+.id_label {
+    position: absolute;
+    cursor: text;
+    font-size: 13px;
+    top: 30px;
+    left: 30px;
+    color: rgba(0, 0, 0, 0.863);
+    transition: all 0.2s linear;
+}
+
+.id__input:focus ~ .id_label {
+    font-size: 10px;
+    top: 25px;
+    left: 21px;
+    color: #8c8c8c;
+    transition: all 0.2s linear;
+}
+
+.id_label__focused {
+    position: absolute;
+    font-size: 10px;
+    top: 25px;
+    left: 21px;
+    color: #8c8c8c;
+}
+
+.send__button {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.send__text {
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.hidden {
+    display: none;
+}
